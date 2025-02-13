@@ -26,18 +26,14 @@ player_name = "kalaka0314"
 print(f"\nWelcome, {player_name}! You’ve entered the arena of champions!")
 print("Every champion has a homeland!\n")
 
-
 # Display available countries to choose from
 for index in range(1, len(teams_by_country.keys())):
     print(f"{index} - {list(teams_by_country.keys())[index - 1]}")
 
-
 # Prompt player to select a country
 country_selection = input("\nType the country of your favorite team to continue: ")
 
-
 print()
-
 
 # Display teams from the chosen country
 counter_teams = 1
@@ -46,18 +42,14 @@ for team in teams_by_country[country_selection]:
     counter_teams += 1
 print()
 
-
 # Prompt player to select a team
 player_team = input("It's time to reveal your loyalty! Type the name of your favorite team: ")
-
 
 print(f"\nA champion has spoken!, {player_name} stands with {player_team}!")
 print("It’s time for the big draw! Let’s determine the groups for the group stage!")
 
-
 # Create a list of all 32 teams
 group_stage_teams = []
-
 
 for country_teams in teams_by_country.values():
     for team in country_teams:
@@ -76,14 +68,12 @@ group_F = ["Group F"]
 group_G = ["Group G"]
 group_H = ["Group H"]
 
-
 groups = [group_A, group_B, group_C, group_D, group_E, group_F, group_G, group_H]
 
 # Flag to control the random team assignment loop
 ACTIVE = True
 
 group_stage_teams_counter = 1  # Counter for team assignment tracking
-
 
 # Randomly distribute teams into 8 groups
 while ACTIVE:
@@ -120,7 +110,6 @@ while ACTIVE:
     else:
         ACTIVE = False  # Stop loop when all teams have been assigned
 
-
 # Print out the final groups
 print()
 for group in groups:
@@ -131,27 +120,14 @@ for group in groups:
         else:
             print(f"{team}")
 
-
-# Uncomment the lines below for debugging purposes to view groups
-"""
-print(group_A)
-print(group_B)
-print(group_C)
-print(group_D)
-print(group_E)
-print(group_F)
-print(group_G)
-print(group_H)
-print(groups)
-"""
 for group in groups:
     if player_team in group:
+        player_team_group_name = group[0]
+        player_team_group = group
         print(f"\n\nYour team: {player_team} has been assigned to {group[0]}!")
         player_group = group
 
-
 input("\n\nLet's generate the group stage matches. Hit Enter to continue. \n")
-
 
 opponent_counter = 1
 opponent_list = []
@@ -162,7 +138,6 @@ for opponent in player_group[1:]:
         opponent_list.append(opponent)
         opponent_counter += 1
 print("\n")
-
 
 question_number = random.randint(1,10)
 #print(question_number)
@@ -528,31 +503,30 @@ questions = {
    [10, "In which season did Porto reach the UEFA Champions League quarter-finals for the first time?", ["1984-85", "1997-98", "2003-04", "2010-11"], "1984-85"]
 ],
 "Crvena zvezda": [
-   [1, "En qué año ganó Crvena zvezda su única Copa de Europa?", ["1989", "1991", "1993", "1995"], "1991"],
-   [2, "¿A qué equipo derrotó Crvena zvezda en la final de la Copa de Europa 1990-91?", ["Barcelona", "AC Milan", "Marseille", "Real Madrid"], "Marseille"],
-   [3, "¿En qué país juega Crvena zvezda?", ["Croacia", "Eslovenia", "Serbia", "Bosnia y Herzegovina"], "Serbia"],
-   [4, "¿Cuál es el estadio de Crvena zvezda?", ["Partizan Stadium", "Rajko Mitić Stadium", "Maksimir Stadium", "Marakana"], "Rajko Mitić Stadium"],
-   [5, "¿Cuál es el mayor rival de Crvena zvezda en el fútbol serbio?", ["Vojvodina", "Radnički Niš", "Partizan", "Napredak"], "Partizan"],
-   [6, "¿Cuál de estos jugadores jugó para Crvena zvezda antes de hacerse famoso?", ["Luka Modrić", "Dejan Stanković", "Branislav Ivanović", "Nemanja Vidić"], "Dejan Stanković"],
-   [7, "¿Cuántas veces ha ganado Crvena zvezda la liga serbia (hasta 2023)?", ["20", "25", "30", "35"], "30"],
-   [8, "¿En qué temporada de la UEFA Champions League Crvena zvezda jugó la fase de grupos por primera vez en la era moderna?", ["2000-01", "2005-06", "2018-19", "2020-21"], "2018-19"],
-   [9, "¿Cuál de estos equipos no estaba en el grupo de Crvena zvezda en la UEFA Champions League 2018-19?", ["Liverpool", "Napoli", "PSG", "Juventus"], "Juventus"],
-   [10, "¿Cuál de estos trofeos ha ganado Crvena zvezda?", ["Europa League", "Supercopa de la UEFA", "Copa Intercontinental", "Recopa de Europa"], "Copa Intercontinental"]
+    [1, "In what year did Crvena zvezda win its only European Cup?", ["1989", "1991", "1993", "1995"], "1991"],
+    [2, "Which team did Crvena zvezda defeat in the 1990-91 European Cup final?", ["Barcelona", "AC Milan", "Marseille", "Real Madrid"], "Marseille"],
+    [3, "In which country does Crvena zvezda play?", ["Croatia", "Slovenia", "Serbia", "Bosnia and Herzegovina"], "Serbia"],
+    [4, "What is Crvena zvezda's stadium?", ["Partizan Stadium", "Rajko Mitić Stadium", "Maksimir Stadium", "Marakana"], "Rajko Mitić Stadium"],
+    [5, "Who is Crvena zvezda's biggest rival in Serbian football?", ["Vojvodina", "Radnički Niš", "Partizan", "Napredak"], "Partizan"],
+    [6, "Which of these players played for Crvena zvezda before becoming famous?", ["Luka Modrić", "Dejan Stanković", "Branislav Ivanović", "Nemanja Vidić"], "Dejan Stanković"],
+    [7, "How many times has Crvena zvezda won the Serbian league (until 2023)?", ["20", "25", "30", "35"], "30"],
+    [8, "In which UEFA Champions League season did Crvena zvezda first play in the group stage in the modern era?", ["2000-01", "2005-06", "2018-19", "2020-21"], "2018-19"],
+    [9, "Which of these teams was not in Crvena zvezda's group in the 2018-19 UEFA Champions League?", ["Liverpool", "Napoli", "PSG", "Juventus"], "Juventus"],
+    [10, "Which of these trophies has Crvena zvezda won?", ["Europa League", "UEFA Super Cup", "Intercontinental Cup", "Cup Winners' Cup"], "Intercontinental Cup"]
 ],
 "Lens": [
-   [1, "¿En qué año ganó Lens su único título de la Ligue 1?", ["1994", "1996", "1998", "2000"], "1998"],
-   [2, "¿Cuál es el estadio donde juega Lens sus partidos como local?", ["Parc des Princes", "Stade Vélodrome", "Stade Félix-Bollaert", "Stade Pierre-Mauroy"], "Stade Félix-Bollaert"],
-   [3, "¿Cuál es el apodo más conocido del RC Lens?", ["Les Sang et Or", "Les Dogues", "Les Canaris", "Les Verts"], "Les Sang et Or"],
-   [4, "¿Cuál es el principal rival de Lens en el fútbol francés?", ["Lille", "PSG", "Marseille", "Lyon"], "Lille"],
-   [5, "¿En qué temporada Lens jugó por primera vez la fase de grupos de la UEFA Champions League?", ["1995-96", "1998-99", "2000-01", "2002-03"], "1998-99"],
-   [6, "¿Contra qué equipo Lens logró una famosa victoria en Old Trafford en la fase previa de la Champions League 1998-99?", ["Arsenal", "Manchester United", "Liverpool", "Chelsea"], "Arsenal"],
-   [7, "¿Qué equipo eliminó a Lens en su última participación en la fase de grupos de la UEFA Champions League antes de la temporada 2023-24?", ["Bayern Munich", "PSG", "AC Milan", "Deportivo La Coruña"], "Deportivo La Coruña"],
-   [8, "¿Cuál de estos jugadores es una leyenda de Lens?", ["Didier Drogba", "Raphaël Varane", "Claude Makélélé", "Patrick Vieira"], "Raphaël Varane"],
-   [9, "¿En qué región de Francia se encuentra el RC Lens?", ["Normandía", "Hauts-de-France", "Alsacia", "Occitania"], "Hauts-de-France"],
-   [10, "¿Qué color predomina en la equipación de Lens además del rojo?", ["Azul", "Verde", "Dorado", "Negro"], "Dorado"]
+    [1, "In what year did Lens win its only Ligue 1 title?", ["1994", "1996", "1998", "2000"], "1998"],
+    [2, "What is the stadium where Lens plays its home matches?", ["Parc des Princes", "Stade Vélodrome", "Stade Félix-Bollaert", "Stade Pierre-Mauroy"], "Stade Félix-Bollaert"],
+    [3, "What is the most well-known nickname of RC Lens?", ["Les Sang et Or", "Les Dogues", "Les Canaris", "Les Verts"], "Les Sang et Or"],
+    [4, "Who is Lens' main rival in French football?", ["Lille", "PSG", "Marseille", "Lyon"], "Lille"],
+    [5, "In which season did Lens first play in the UEFA Champions League group stage?", ["1995-96", "1998-99", "2000-01", "2002-03"], "1998-99"],
+    [6, "Which team did Lens famously defeat at Old Trafford in the 1998-99 Champions League qualifying round?", ["Arsenal", "Manchester United", "Liverpool", "Chelsea"], "Arsenal"],
+    [7, "Which team eliminated Lens in its last UEFA Champions League group stage appearance before the 2023-24 season?", ["Bayern Munich", "PSG", "AC Milan", "Deportivo La Coruña"], "Deportivo La Coruña"],
+    [8, "Which of these players is a Lens legend?", ["Didier Drogba", "Raphaël Varane", "Claude Makélélé", "Patrick Vieira"], "Raphaël Varane"],
+    [9, "In which region of France is RC Lens located?", ["Normandy", "Hauts-de-France", "Alsace", "Occitania"], "Hauts-de-France"],
+    [10, "Which color dominates Lens' kit besides red?", ["Blue", "Green", "Gold", "Black"], "Gold"]
 ]
 }
-
 
 groups_stage = True
 points = 0
@@ -578,14 +552,24 @@ while groups_stage:
             print(f"\nPoints after this match: {points}")
     groups_stage = False
 
-
 print(f"\nYou get {points} points for the groups stage games.")
 if points >= 6:
     print("\nYou have qualified for the Round of 16")
 else:
     print("\nYou've been disqualified.")
 
-
-
-
-
+#Code for testing:
+# Uncomment the lines below for debugging purposes to view groups
+print("\n\n")
+print(group_A)
+print(group_B)
+print(group_C)
+print(group_D)
+print(group_E)
+print(group_F)
+print(group_G)
+print(group_H)
+print(groups)
+print()
+print(f"Opponents: {opponent_list}")
+print(player_group)
