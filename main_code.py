@@ -25,7 +25,7 @@ print(f"\nWelcome, {player_name}! You’ve entered the arena of champions!")
 print("Every champion has a homeland!\n")
 
 # Display available countries to choose from
-for index in range(1, len(teams_by_country.keys())):
+for index in range(1, len(teams_by_country.keys()) + 1):
     print(f"{index} - {list(teams_by_country.keys())[index - 1]}")
 
 # Prompt player to select a country
@@ -603,7 +603,6 @@ standings = [[player_team, player_team_points],
             [opponent_results[1][0], opponent_results[1][1]], 
             [opponent_results[2][0], opponent_results[2][1]]]
 
-print(standings)
 print()
 def get_key(team):
     return team[1]  # Sorting based on points
@@ -650,9 +649,84 @@ for index in range(int(len(R16)/2)):
 
 print()
 
+R16_opponent_list = []
+
 # Checking if the player's team is in any of the Round of 16 matchups
 for match in R16_matches:
     if match[0] == player_team or match[1] == player_team:
-        print(str(match) + " " + "Question Round" + " " + "<-----------------")
+        if match[0] == player_team:
+            R16_opponent_list.append(match[1])
+        else:
+            R16_opponent_list.append(match[0])
     else:
-        print(match)
+        continue
+
+
+R16_question_number = random.randint(1,10)
+print(f"R16 # question: {R16_question_number}")
+print(f"Opponent: {R16_opponent_list[0]}")
+
+R16_stage = True
+while R16_stage:
+    for opponent in R16_opponent_list:
+        print(f"\nMatch against: {opponent}\n")
+        print(questions[opponent][R16_question_number - 1][1])
+        print("\n")
+        for option in questions[opponent][R16_question_number - 1][2]:
+            print(option)
+        print("\n")
+
+        answer = input("Type your answer: ")
+
+        if answer == questions[opponent][R16_question_number - 1][3]:
+            R16_player_result = True
+            print("\nWin")
+            print(f"\nYou advance to the next round.")
+        else:
+            R16_player_result = False
+            print("\nLoss")
+            print(f"\nYou've been disqualified")
+        
+        print("-" * 60)
+    
+    R16_stage = False
+
+
+# Initialize an empty list to store teams advancing to Round of 8 (R8)
+R8 = []
+
+# Loop through all Round of 16 (R16) matches
+for match in R16_matches:
+    # Check if the player_team is in the current match
+    if match[0] == player_team or match[1] == player_team:
+        # If player_team is the first team, add the opponent to the opponent list
+        if match[0] == player_team:
+            R16_opponent_list.append(match[1])
+        else:
+            # If player_team is the second team, add the opponent to the opponent list
+            R16_opponent_list.append(match[0])
+    else:
+        # If neither team is player_team, continue to the next match
+        continue
+
+# Print an empty line for clarity
+print()
+
+# Loop through all Round of 16 (R16) matches again to determine who advances to Round 8 (R8)
+for match in R16_matches:
+    # Check if player_team is in the current match
+    if match[0] == player_team or match[1] == player_team:
+        # If player_team won, add it to the R8 list
+        if R16_player_result == True:
+            R8.append(player_team)
+        else:
+            # If player_team lost, add the opponent from the opponent list
+            R8.append(R16_opponent_list[0])
+    else:
+        # For other matches, randomly determine the winner between the two teams
+        R16_match_winner = random.randint(0, 1)
+        # Add the winner to the R8 list
+        R8.append(match[R16_match_winner])
+
+# Print the list of teams advancing to Round of 8 (R8)
+print(R8)
