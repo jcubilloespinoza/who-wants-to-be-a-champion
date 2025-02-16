@@ -1,1015 +1,987 @@
 import random  # Import the random module for random team selection
+player_team_status = True
+while player_team_status:
+    # Dictionary mapping countries to their respective teams
+    teams_by_country = {
+    "England": ["Arsenal", "Manchester City", "Manchester United", "Newcastle United"],
+    "Spain": ["Atlético Madrid", "Barcelona", "Real Madrid", "Real Sociedad", "Sevilla"],
+    "Italy": ["Inter Milan", "Lazio", "AC Milan", "Napoli", "Juventus"],
+    "Germany": ["Bayern Munich", "Borussia Dortmund", "RB Leipzig"],
+    "France": ["Lens", "Paris Saint-Germain"],
+    "Portugal": ["Benfica", "Braga", "Porto"],
+    "Netherlands": ["Feyenoord", "PSV Eindhoven"],
+    "Austria": ["Red Bull Salzburg"],
+    "Scotland": ["Celtic"],
+    "Serbia": ["Crvena zvezda"],
+    "Ukraine": ["Shakhtar Donetsk"],
+    "Belgium": ["Antwerp"],
+    "Switzerland": ["Young Boys"],
+    "Denmark": ["Copenhagen"],
+    "Turkey": ["Galatasaray"]
+    }
 
-# Dictionary mapping countries to their respective teams
-teams_by_country = {
-"England": ["Arsenal", "Manchester City", "Manchester United", "Newcastle United"],
-"Spain": ["Atlético Madrid", "Barcelona", "Real Madrid", "Real Sociedad", "Sevilla"],
-"Italy": ["Inter Milan", "Lazio", "AC Milan", "Napoli", "Juventus"],
-"Germany": ["Bayern Munich", "Borussia Dortmund", "RB Leipzig"],
-"France": ["Lens", "Paris Saint-Germain"],
-"Portugal": ["Benfica", "Braga", "Porto"],
-"Netherlands": ["Feyenoord", "PSV Eindhoven"],
-"Austria": ["Red Bull Salzburg"],
-"Scotland": ["Celtic"],
-"Serbia": ["Crvena zvezda"],
-"Ukraine": ["Shakhtar Donetsk"],
-"Belgium": ["Antwerp"],
-"Switzerland": ["Young Boys"],
-"Denmark": ["Copenhagen"],
-"Turkey": ["Galatasaray"]
-}
+    # Placeholder for the player's name
+    player_name = input("Please enter your name: ")
+    print(f"\nWelcome, {player_name}! You’ve entered the arena of champions!")
+    print("Every champion has a homeland!\n")
 
-# Placeholder for the player's name
-player_name = "kalaka0314"
-print(f"\nWelcome, {player_name}! You’ve entered the arena of champions!")
-print("Every champion has a homeland!\n")
+    # Display available countries to choose from
+    for index in range(1, len(teams_by_country.keys()) + 1):
+        print(f"{index} - {list(teams_by_country.keys())[index - 1]}")
 
-# Display available countries to choose from
-for index in range(1, len(teams_by_country.keys()) + 1):
-    print(f"{index} - {list(teams_by_country.keys())[index - 1]}")
+    # Prompt player to select a country
+    country_selection = input("\nType the country of your favorite team to continue: ")
 
-# Prompt player to select a country
-country_selection = input("\nType the country of your favorite team to continue: ")
+    print()
 
-print()
+    # Display teams from the chosen country
+    counter_teams = 1
+    for team in teams_by_country[country_selection]:
+        print(f"{counter_teams} - {team}")
+        counter_teams += 1
+    print()
 
-# Display teams from the chosen country
-counter_teams = 1
-for team in teams_by_country[country_selection]:
-    print(f"{counter_teams} - {team}")
-    counter_teams += 1
-print()
+    # Prompt player to select a team
+    player_team = input("It's time to reveal your loyalty! Type the name of your favorite team: ")
+    
+    print(f"\nA champion has spoken!, {player_name} stands with {player_team}!")
+    print("It’s time for the big draw! Let’s determine the groups for the group stage!")
 
-# Prompt player to select a team
-player_team = input("It's time to reveal your loyalty! Type the name of your favorite team: ")
+    input("\nHit Enter to continue! ")
+    # Create a list of all 32 teams
+    group_stage_teams = []
 
-print(f"\nA champion has spoken!, {player_name} stands with {player_team}!")
-print("It’s time for the big draw! Let’s determine the groups for the group stage!")
+    for country_teams in teams_by_country.values():
+        for team in country_teams:
+            group_stage_teams.append(team)
 
-input("\nHit Enter to continue! ")
-# Create a list of all 32 teams
-group_stage_teams = []
+    # List to track used indexes to avoid duplicates
+    used_index_list = []
 
-for country_teams in teams_by_country.values():
-    for team in country_teams:
-        group_stage_teams.append(team)
+    # Initialize groups
+    group_A = ["Group A"]
+    group_B = ["Group B"]
+    group_C = ["Group C"]
+    group_D = ["Group D"]
+    group_E = ["Group E"]
+    group_F = ["Group F"]
+    group_G = ["Group G"]
+    group_H = ["Group H"]
 
-# List to track used indexes to avoid duplicates
-used_index_list = []
+    groups = [group_A, group_B, group_C, group_D, group_E, group_F, group_G, group_H]
 
-# Initialize groups
-group_A = ["Group A"]
-group_B = ["Group B"]
-group_C = ["Group C"]
-group_D = ["Group D"]
-group_E = ["Group E"]
-group_F = ["Group F"]
-group_G = ["Group G"]
-group_H = ["Group H"]
+    # Flag to control the random team assignment loop
+    ACTIVE = True
 
-groups = [group_A, group_B, group_C, group_D, group_E, group_F, group_G, group_H]
+    group_stage_teams_counter = 1  # Counter for team assignment tracking
 
-# Flag to control the random team assignment loop
-ACTIVE = True
-
-group_stage_teams_counter = 1  # Counter for team assignment tracking
-
-# Randomly distribute teams into 8 groups
-while ACTIVE:
-    if len(used_index_list) < 32:
-        index = random.randint(1, 32)  # Generate a random index between 1 and 32
-        
-        if index in used_index_list:
-            continue  # Skip if the index has already been used
-        else:
-            used_index_list.append(index)  # Add to used index list
+    # Randomly distribute teams into 8 groups
+    while ACTIVE:
+        if len(used_index_list) < 32:
+            index = random.randint(1, 32)  # Generate a random index between 1 and 32
             
-            # Assign teams to groups based on the number of selected teams
-            if len(used_index_list) <= 4:
-                group_A.append(group_stage_teams[index-1])
-            elif 4 < len(used_index_list) <= 8:
-                group_B.append(group_stage_teams[index-1])
-            elif 8 < len(used_index_list) <= 12:
-                group_C.append(group_stage_teams[index-1])
-            elif 12 < len(used_index_list) <= 16:
-                group_D.append(group_stage_teams[index-1])
-            elif 16 < len(used_index_list) <= 20:
-                group_E.append(group_stage_teams[index-1])
-            elif 20 < len(used_index_list) <= 24:
-                group_F.append(group_stage_teams[index-1])
-            elif 24 < len(used_index_list) <= 28:
-                group_G.append(group_stage_teams[index-1])
-            elif 28 < len(used_index_list) <= 32:
-                group_H.append(group_stage_teams[index-1])
+            if index in used_index_list:
+                continue  # Skip if the index has already been used
             else:
-                print("ERROR")
+                used_index_list.append(index)  # Add to used index list
+                
+                # Assign teams to groups based on the number of selected teams
+                if len(used_index_list) <= 4:
+                    group_A.append(group_stage_teams[index-1])
+                elif 4 < len(used_index_list) <= 8:
+                    group_B.append(group_stage_teams[index-1])
+                elif 8 < len(used_index_list) <= 12:
+                    group_C.append(group_stage_teams[index-1])
+                elif 12 < len(used_index_list) <= 16:
+                    group_D.append(group_stage_teams[index-1])
+                elif 16 < len(used_index_list) <= 20:
+                    group_E.append(group_stage_teams[index-1])
+                elif 20 < len(used_index_list) <= 24:
+                    group_F.append(group_stage_teams[index-1])
+                elif 24 < len(used_index_list) <= 28:
+                    group_G.append(group_stage_teams[index-1])
+                elif 28 < len(used_index_list) <= 32:
+                    group_H.append(group_stage_teams[index-1])
+                else:
+                    print("ERROR")
+                
+                group_stage_teams_counter += 1  # Increment counter
+        else:
+            ACTIVE = False  # Stop loop when all teams have been assigned
+
+    # Print out the final groups
+    print()
+    for group in groups:
+        print("-"*10 + group[0] + "-"*10)
+        for team in group[1:]:  # Skip group name when printing teams
+            if team == player_team:  # If the team is the player's chosen team, add an identifier "*" before its name.
+                print(f"* {team}")
+            else:
+                print(f"{team}")
+
+    # Find and display the player's team group
+    for group in groups:
+        if player_team in group:  # Loop through groups to find the player's team
+            player_team_group_name = group[0]  # Store the group name
+            player_team_group = group  # Store the group itself
+            print(f"\n\nYour team: {player_team} has been assigned to {group[0]}!")
+            player_group = group  # Assign the found group to player_group
+
+    input("\n\nLet's generate the group stage matches. Press Enter to continue. \n")
+
+    # Generate matches for the player's group
+    opponent_counter = 1  # Counter for match numbering
+    opponent_list = []  # List to store opponents
+    print("\n")
+    for opponent in player_group[1:]:  # Iterate through the group, excluding the name
+        if opponent != player_team:
+            print(f"Match #{opponent_counter}: {opponent}")  # Display match number and opponent
+            opponent_list.append(opponent)  # Add opponent to the list
+            opponent_counter += 1  # Increment counter
+    print("\n")
+
+    # Generate a random question number 
+    question_number = random.randint(1,10)
+    questions = {
+    "Borussia Dortmund": [
+        [1, "In which season did Borussia Dortmund win their first and only UEFA Champions League title?", ["1995-96", "1996-97", "1997-98", "1998-99"], "1996-97"],
+        [2, "Who scored Borussia Dortmund's first goal in the 1997 UEFA Champions League final against Juventus?", ["Karl-Heinz Riedle", "Lars Ricken", "Andreas Möller", "Paulo Sousa"], "Karl-Heinz Riedle"],
+        [3, "Which team did Borussia Dortmund defeat in the 1997 UEFA Champions League final?", ["AC Milan", "Real Madrid", "Juventus", "Manchester United"], "Juventus"],
+        [4, "What was the final score of the 1997 UEFA Champions League final between Borussia Dortmund and Juventus?", ["1-0", "2-1", "3-1", "4-2"], "3-1"],
+        [5, "Who scored Borussia Dortmund's third goal in the 1997 UEFA Champions League final, just seconds after coming on as a substitute?", ["Lars Ricken", "Jürgen Kohler", "Stefan Reuter", "Matthias Sammer"], "Lars Ricken"],
+        [6, "Which stadium hosted the 1997 UEFA Champions League final where Borussia Dortmund won the title?", ["San Siro", "Old Trafford", "Olympiastadion", "Stade de France"], "Olympiastadion"],
+        [7, "Which team knocked Borussia Dortmund out in the 2012-13 UEFA Champions League final?", ["Real Madrid", "Manchester United", "Bayern Munich", "Barcelona"], "Bayern Munich"],
+        [8, "Who was Borussia Dortmund's top scorer in the 2012-13 UEFA Champions League season?", ["Marco Reus", "Mario Götze", "Robert Lewandowski", "Jakub Błaszczykowski"], "Robert Lewandowski"],
+        [9, "In which stadium was the 2012-13 UEFA Champions League final between Borussia Dortmund and Bayern Munich played?", ["Allianz Arena", "Wembley Stadium", "Signal Iduna Park", "Camp Nou"], "Wembley Stadium"],
+        [10, "Who was Borussia Dortmund's head coach when they won the 1997 UEFA Champions League?", ["Jürgen Klopp", "Thomas Tuchel", "Ottmar Hitzfeld", "Lucien Favre"], "Ottmar Hitzfeld"]
+    ],
+    "Copenhagen": [
+        [1, "In which season did Copenhagen make their first-ever appearance in the UEFA Champions League group stage?", ["2005-06", "2006-07", "2007-08", "2008-09"], "2006-07"],
+        [2, "Which team did Copenhagen famously defeat in the 2006-07 UEFA Champions League group stage?", ["Manchester United", "AC Milan", "Barcelona", "Real Madrid"], "Manchester United"],
+        [3, "Which Danish club is Copenhagen's biggest domestic rival?", ["Brøndby IF", "FC Midtjylland", "AGF Aarhus", "Odense BK"], "Brøndby IF"],
+        [4, "How far did Copenhagen reach in their best-ever UEFA Champions League campaign?", ["Group Stage", "Round of 16", "Quarter-Finals", "Semi-Finals"], "Round of 16"],
+        [5, "Which famous stadium is the home of Copenhagen?", ["Telia Parken", "Brøndby Stadium", "MCH Arena", "NRGi Park"], "Telia Parken"],
+        [6, "Which Copenhagen player scored the club's first-ever goal in the UEFA Champions League?", ["Marcus Allbäck", "Jesper Grønkjær", "Dame N'Doye", "Zeca"], "Marcus Allbäck"],
+        [7, "Who was the manager when Copenhagen reached the Round of 16 in the 2010-11 UEFA Champions League?", ["Ståle Solbakken", "Ariël Jacobs", "Jess Thorup", "Michael Laudrup"], "Ståle Solbakken"],
+        [8, "Against which club did Copenhagen secure their first-ever UEFA Champions League group stage victory?", ["Celtic", "Galatasaray", "Ajax", "Club Brugge"], "Celtic"],
+        [9, "Which former Copenhagen player went on to win the UEFA Champions League with Chelsea in 2012?", ["Jesper Grønkjær", "Andreas Christensen", "William Kvist", "Thomas Delaney"], "Andreas Christensen"],
+        [10, "In the 2022-23 UEFA Champions League, which group was Copenhagen placed in?", ["Group A", "Group B", "Group C", "Group D"], "Group G"]
+    ],
+    "Bayern Munich": [
+        [1, "In which year did Bayern Munich win their first UEFA Champions League title?", ["1972", "1974", "1976", "1978"], "1974"],
+        [2, "Which team did Bayern Munich defeat in the 2012-13 UEFA Champions League final?", ["Real Madrid", "Barcelona", "Borussia Dortmund", "Juventus"], "Borussia Dortmund"],
+        [3, "Who scored the winning goal for Bayern Munich in the 2013 UEFA Champions League final?", ["Mario Mandzukic", "Arjen Robben", "Franck Ribéry", "Thomas Müller"], "Arjen Robben"],
+        [4, "How many times has Bayern Munich won the UEFA Champions League as of 2023?", ["5", "6", "7", "8"], "6"],
+        [5, "Which club did Bayern Munich defeat 8-2 in the 2019-20 UEFA Champions League quarter-finals?", ["Manchester City", "Paris Saint-Germain", "Barcelona", "Chelsea"], "Barcelona"],
+        [6, "Who was Bayern Munich's head coach when they won the 2019-20 UEFA Champions League?", ["Niko Kovač", "Jupp Heynckes", "Hansi Flick", "Pep Guardiola"], "Hansi Flick"],
+        [7, "Which Bayern Munich player scored a hat-trick in the 2015 UEFA Champions League semi-final against Porto?", ["Robert Lewandowski", "Thomas Müller", "Philippe Coutinho", "Thiago Alcântara"], "Robert Lewandowski"],
+        [8, "Which club did Bayern Munich defeat in the 2020 UEFA Champions League final?", ["Paris Saint-Germain", "Real Madrid", "Manchester United", "Atletico Madrid"], "Paris Saint-Germain"],
+        [9, "Which Bayern Munich player holds the record for the fastest hat-trick in UEFA Champions League history?", ["Serge Gnabry", "Robert Lewandowski", "Thomas Müller", "Franck Ribéry"], "Robert Lewandowski"],
+        [10, "Which stadium hosted Bayern Munich’s 2012 UEFA Champions League final against Chelsea?", ["Old Trafford", "Camp Nou", "Allianz Arena", "Wembley Stadium"], "Allianz Arena"]
+    ],
+    "Lazio": [
+        [1, "In which season did Lazio make their first-ever appearance in the UEFA Champions League group stage?", ["1997-98", "1998-99", "1999-2000", "2000-01"], "1999-2000"],
+        [2, "Lazio reached the quarter-finals of the UEFA Champions League in which season?", ["1997-98", "1999-2000", "2001-02", "2003-04"], "1999-2000"],
+        [3, "Which club eliminated Lazio in the 1999-2000 UEFA Champions League quarter-finals?", ["Real Madrid", "Valencia", "Manchester United", "Juventus"], "Valencia"],
+        [4, "Who was Lazio's top scorer in the 1999-2000 UEFA Champions League campaign?", ["Hernán Crespo", "Marcelo Salas", "Pavel Nedvěd", "Juan Sebastián Verón"], "Hernán Crespo"],
+        [5, "Which legendary Lazio captain played a crucial role in their 1999-2000 UEFA Champions League run?", ["Giuseppe Favalli", "Alessandro Nesta", "Diego Simeone", "Sinisa Mihajlovic"], "Alessandro Nesta"],
+        [6, "Which group did Lazio finish at the top of during the 1999-2000 UEFA Champions League second group stage?", ["Group A", "Group B", "Group C", "Group D"], "Group D"],
+        [7, "Lazio returned to the UEFA Champions League in which season after a long absence since 2007-08?", ["2012-13", "2014-15", "2015-16", "2020-21"], "2020-21"],
+        [8, "Which team eliminated Lazio in the Round of 16 during the 2020-21 UEFA Champions League?", ["Barcelona", "Bayern Munich", "Manchester City", "Real Madrid"], "Bayern Munich"],
+        [9, "Which Lazio manager guided the team back to the UEFA Champions League in the 2020-21 season?", ["Simone Inzaghi", "Maurizio Sarri", "Edoardo Reja", "Stefano Pioli"], "Simone Inzaghi"],
+        [10, "Which Lazio player scored a crucial goal against Borussia Dortmund in the 2020-21 UEFA Champions League group stage?", ["Sergej Milinković-Savić", "Ciro Immobile", "Luis Alberto", "Felipe Caicedo"], "Ciro Immobile"]
+    ],
+    "Arsenal": [
+    [1, "In which season did Arsenal first reach the UEFA Champions League final?", ["2003-04", "2005-06", "2007-08", "2010-11"], "2005-06"],
+    [2, "Who scored the only goal for Arsenal in the 2006 UEFA Champions League final against Barcelona?", ["Robert Pirès", "Sol Campbell", "Thierry Henry", "Freddie Ljungberg"], "Sol Campbell"],
+    [3, "Which stadium did Arsenal move to in 2006, replacing Highbury?", ["Emirates Stadium", "Old Trafford", "Anfield", "Stamford Bridge"], "Emirates Stadium"],
+    [4, "Who is Arsenal's all-time top scorer?", ["Robin van Persie", "Thierry Henry", "Ian Wright", "Dennis Bergkamp"], "Thierry Henry"],
+    [5, "In which season did Arsenal go unbeaten in the Premier League?", ["2002-03", "2003-04", "2004-05", "2005-06"], "2003-04"],
+    [6, "Which manager led Arsenal during their unbeaten Premier League season?", ["Arsène Wenger", "George Graham", "Mikel Arteta", "Unai Emery"], "Arsène Wenger"],
+    [7, "Against which team did Arsenal secure their first-ever Premier League title?", ["Liverpool", "Manchester United", "Tottenham Hotspur", "Everton"], "Liverpool"],
+    [8, "Who was Arsenal's captain when they reached the 2006 UEFA Champions League final?", ["Patrick Vieira", "Cesc Fàbregas", "Thierry Henry", "Robert Pirès"], "Patrick Vieira"],
+    [9, "Which former Arsenal player went on to play for Barcelona and later return to the Premier League with Manchester City?", ["Cesc Fàbregas", "Robin van Persie", "Samir Nasri", "Alexis Sánchez"], "Cesc Fàbregas"],
+    [10, "In which year did Arsenal's 'Invincibles' team complete their unbeaten league season?", ["2003", "2004", "2005", "2006"], "2004"]
+    ],
+    "Manchester City": [
+    [1, "In which year did Manchester City win their first UEFA Champions League title?", ["2010", "2012", "2016", "2023"], "2023"],
+    [2, "Who scored the winning goal for Manchester City in the 2023 UEFA Champions League final?", ["Erling Haaland", "Kevin De Bruyne", "Riyad Mahrez", "Rodri"], "Rodri"],
+    [3, "Which Manchester City player holds the record for most goals in a single Premier League season?", ["Sergio Agüero", "Raheem Sterling", "Kevin De Bruyne", "Erling Haaland"], "Erling Haaland"],
+    [4, "Which stadium is the home of Manchester City?", ["Old Trafford", "Anfield", "Etihad Stadium", "Stamford Bridge"], "Etihad Stadium"],
+    [5, "Who was Manchester City's manager when they won their first Premier League title?", ["Roberto Mancini", "Pep Guardiola", "Manuel Pellegrini", "Mark Hughes"], "Roberto Mancini"],
+    [6, "Which team did Manchester City defeat 6-3 in a famous 2022 Premier League match?", ["Arsenal", "Manchester United", "Tottenham Hotspur", "Chelsea"], "Manchester United"],
+    [7, "Who was Manchester City's captain during their 2023 UEFA Champions League win?", ["Sergio Agüero", "Vincent Kompany", "Kevin De Bruyne", "Fernandinho"], "Vincent Kompany"],
+    [8, "Which Manchester City player scored a hat-trick in the 2019-20 UEFA Champions League against Atalanta?", ["Sergio Agüero", "Gabriel Jesus", "Raheem Sterling", "Kevin De Bruyne"], "Raheem Sterling"],
+    [9, "Which famous Manchester City player is known for his iconic 'no-look' passes?", ["Kevin De Bruyne", "David Silva", "Yaya Touré", "Sergio Agüero"], "David Silva"],
+    [10, "Who was the first player to score for Manchester City in the 2023 UEFA Champions League final?", ["Kevin De Bruyne", "Rodri", "Ilkay Gündogan", "Erling Haaland"], "Rodri"]
+    ],
+    "Manchester United": [
+    [1, "In which year did Manchester United win their first UEFA Champions League title?", ["1968", "1992", "1999", "2008"], "1968"],
+    [2, "Who scored the winning goal for Manchester United in the 1999 UEFA Champions League final?", ["David Beckham", "Ryan Giggs", "Teddy Sheringham", "Ole Gunnar Solskjær"], "Ole Gunnar Solskjær"],
+    [3, "Which stadium is the home of Manchester United?", ["Anfield", "Old Trafford", "Stamford Bridge", "Etihad Stadium"], "Old Trafford"],
+    [4, "Who is Manchester United's all-time top scorer?", ["Wayne Rooney", "Ryan Giggs", "Cristiano Ronaldo", "Eric Cantona"], "Wayne Rooney"],
+    [5, "Which manager led Manchester United to their first Premier League title?", ["Sir Alex Ferguson", "Louis van Gaal", "José Mourinho", "Ryan Giggs"], "Sir Alex Ferguson"],
+    [6, "In which year did Manchester United complete the famous 'treble'?", ["1997", "1999", "2003", "2008"], "1999"],
+    [7, "Which team did Manchester United defeat 4-0 in the 2019-20 UEFA Champions League round of 16?", ["Barcelona", "Paris Saint-Germain", "Real Madrid", "Roma"], "Barcelona"],
+    [8, "Which Manchester United legend is known for scoring a famous goal in the 1999 FA Cup final against Newcastle?", ["Ryan Giggs", "David Beckham", "Eric Cantona", "Paul Scholes"], "Ryan Giggs"],
+    [9, "Who did Manchester United defeat in the 2008 UEFA Champions League final?", ["Chelsea", "Barcelona", "Arsenal", "Bayern Munich"], "Chelsea"],
+    [10, "Who was Manchester United's captain during their 1999 UEFA Champions League win?", ["Roy Keane", "Eric Cantona", "Ryan Giggs", "Gary Neville"], "Roy Keane"]
+    ],
+    "Newcastle United": [
+    [1, "In which season did Newcastle United first qualify for the UEFA Champions League group stage?", ["1994-95", "1997-98", "2000-01", "2002-03"], "1997-98"],
+    [2, "Which team did Newcastle United famously defeat 3-2 in the 2002-03 UEFA Champions League group stage?", ["Juventus", "Barcelona", "Real Madrid", "AC Milan"], "Juventus"],
+    [3, "Which stadium is the home of Newcastle United?", ["St. James' Park", "Old Trafford", "Emirates Stadium", "Anfield"], "St. James' Park"],
+    [4, "Who is Newcastle United's all-time top scorer?", ["Alan Shearer", "Pavel Srníček", "Nobby Solano", "Yohan Cabaye"], "Alan Shearer"],
+    [5, "Who was the manager when Newcastle United first qualified for the UEFA Champions League?", ["Kevin Keegan", "Bobby Robson", "Sam Allardyce", "Alan Pardew"], "Kevin Keegan"],
+    [6, "In which season did Newcastle United finish second in the Premier League?", ["1994-95", "1996-97", "2000-01", "2010-11"], "1996-97"],
+    [7, "Who scored a famous hat-trick for Newcastle United against Leicester City in the 1996-97 Premier League?", ["Alan Shearer", "Les Ferdinand", "David Ginola", "Rob Lee"], "Alan Shearer"],
+    [8, "Which team did Newcastle United defeat 5-0 in the 1996-97 Premier League?", ["Liverpool", "Manchester United", "Tottenham Hotspur", "Arsenal"], "Manchester United"],
+    [9, "Which player left Newcastle United for Real Madrid in 1999?", ["Laurent Robert", "David Ginola", "Michael Owen", "Yohan Cabaye"], "Laurent Robert"],
+    [10, "Which famous Newcastle player is known for scoring in the 1998-99 UEFA Champions League against Barcelona?", ["Alan Shearer", "Pavel Srníček", "Craig Bellamy", "Duncan Ferguson"], "Alan Shearer"]
+    ],
+    "Atlético Madrid": [
+    [1, "In which season did Atlético Madrid first reach the UEFA Champions League final?", ["2007-08", "2010-11", "2012-13", "2013-14"], "2013-14"],
+    [2, "Who scored the winning goal for Atlético Madrid in the 2014 UEFA Champions League final?", ["Diego Costa", "David Villa", "Arda Turan", "Antoine Griezmann"], "Diego Godín"],
+    [3, "Which stadium is the home of Atlético Madrid?", ["Santiago Bernabéu", "Camp Nou", "Metropolitano Stadium", "Wanda Metropolitano"], "Wanda Metropolitano"],
+    [4, "Who is Atlético Madrid's all-time top scorer?", ["Fernando Torres", "Diego Costa", "Antoine Griezmann", "Luis Suárez"], "Antoine Griezmann"],
+    [5, "Which manager led Atlético Madrid to the 2014 UEFA Champions League final?", ["Diego Simeone", "Gregorio Manzano", "Javier Aguirre", "Luis Aragonés"], "Diego Simeone"],
+    [6, "In which year did Atlético Madrid win La Liga, ending Real Madrid and Barcelona's dominance?", ["2012", "2013", "2014", "2016"], "2014"],
+    [7, "Which team did Atlético Madrid famously beat 4-0 in the 2018 UEFA Europa League final?", ["Marseille", "Juventus", "Liverpool", "Real Madrid"], "Marseille"],
+    [8, "Who scored a hat-trick for Atlético Madrid in their famous 7-1 victory over FC Porto in the 2013-14 UEFA Champions League?", ["Diego Costa", "Antoine Griezmann", "Radamel Falcao", "David Villa"], "Radamel Falcao"],
+    [9, "Which Atlético Madrid player joined Chelsea in 2014 and later returned to Atlético?", ["Diego Costa", "David Villa", "Antoine Griezmann", "Koke"], "Diego Costa"],
+    [10, "Which team did Atlético Madrid face in the 2016 UEFA Champions League final?", ["Real Madrid", "Barcelona", "Juventus", "Bayern Munich"], "Real Madrid"]
+    ],
+    "Barcelona": [
+    [1, "In which year did Barcelona win their first-ever UEFA Champions League title?", ["1992", "2003", "2006", "2009"], "1992"],
+    [2, "Who scored the winning goal for Barcelona in the 2009 UEFA Champions League final?", ["Lionel Messi", "Samuel Eto'o", "David Villa", "Andrés Iniesta"], "Samuel Eto'o"],
+    [3, "Which stadium is the home of Barcelona?", ["Santiago Bernabéu", "Wanda Metropolitano", "Camp Nou", "Anfield"], "Camp Nou"],
+    [4, "Who is Barcelona's all-time top scorer?", ["Ronaldinho", "Neymar", "Lionel Messi", "Xavi Hernández"], "Lionel Messi"],
+    [5, "Who was the manager when Barcelona won the 2009 UEFA Champions League?", ["Frank Rijkaard", "Luis Enrique", "Pep Guardiola", "Tito Vilanova"], "Pep Guardiola"],
+    [6, "In which year did Barcelona complete the famous 'sextuple' by winning six trophies in one year?", ["2007", "2009", "2011", "2015"], "2009"],
+    [7, "Which team did Barcelona defeat 2-0 in the 2006 UEFA Champions League final?", ["Arsenal", "Manchester United", "Chelsea", "Bayer Leverkusen"], "Arsenal"],
+    [8, "Which player is known for scoring the famous 'Hand of God' goal in the 1986 World Cup and played for Barcelona?", ["Jordi Cruyff", "Diego Maradona", "Ronald Koeman", "Luis Suárez"], "Diego Maradona"],
+    [9, "Who scored a hat-trick for Barcelona against Real Madrid in the 2010-11 El Clásico?", ["Lionel Messi", "David Villa", "Pedro", "Cesc Fàbregas"], "Lionel Messi"],
+    [10, "Who was Barcelona's captain during their 2011 UEFA Champions League win?", ["Carles Puyol", "Gerard Piqué", "Xavi Hernández", "Lionel Messi"], "Carles Puyol"]
+    ],
+    "Real Madrid": [
+    [1, "How many times has Real Madrid won the UEFA Champions League?", ["10", "12", "13", "14"], "14"],
+    [2, "In which year did Real Madrid win their first European Cup?", ["1955", "1956", "1960", "1962"], "1956"],
+    [3, "Who scored the winning goal for Real Madrid in the 2014 UEFA Champions League final?", ["Cristiano Ronaldo", "Karim Benzema", "Gareth Bale", "Sergio Ramos"], "Sergio Ramos"],
+    [4, "Which stadium is the home of Real Madrid?", ["Camp Nou", "Santiago Bernabéu", "Metropolitano", "San Siro"], "Santiago Bernabéu"],
+    [5, "Who is Real Madrid's all-time top scorer?", ["Raúl", "Cristiano Ronaldo", "Karim Benzema", "Alfredo Di Stéfano"], "Cristiano Ronaldo"],
+    [6, "Who was the manager when Real Madrid won the 2016 UEFA Champions League?", ["Zinedine Zidane", "José Mourinho", "Carlo Ancelotti", "Julen Lopetegui"], "Zinedine Zidane"],
+    [7, "Which team did Real Madrid defeat 4-1 in the 2014 UEFA Champions League final?", ["Atletico Madrid", "Juventus", "Bayern Munich", "Barcelona"], "Atletico Madrid"],
+    [8, "Who was the captain of Real Madrid during their 2002 UEFA Champions League win?", ["Iker Casillas", "Sergio Ramos", "Raúl", "Cristiano Ronaldo"], "Raúl"],
+    [9, "Which famous Real Madrid player is known as 'The King' of the club?", ["Cristiano Ronaldo", "Alfredo Di Stéfano", "Zinedine Zidane", "Raúl"], "Alfredo Di Stéfano"],
+    [10, "Which team did Real Madrid famously defeat 3-1 in the 2018 UEFA Champions League final?", ["Liverpool", "Juventus", "Bayern Munich", "Atlético Madrid"], "Liverpool"]
+    ],
+    "Real Sociedad": [
+    [1, "In which season did Real Sociedad last qualify for the UEFA Champions League group stage?", ["2003-04", "2013-14", "2020-21", "1996-97"], "2020-21"],
+    [2, "Who is Real Sociedad's all-time top scorer?", ["David Silva", "Carlos Vela", "Aritz Elustondo", "Imanol Agirretxe"], "Carlos Vela"],
+    [3, "Which stadium is the home of Real Sociedad?", ["Camp Nou", "Santiago Bernabéu", "Anoeta Stadium", "San Mames"], "Anoeta Stadium"],
+    [4, "In which year did Real Sociedad finish second in La Liga, their best-ever league position?", ["1980", "1982", "1991", "2003"], "1982"],
+    [5, "Which Real Sociedad player went on to play for Manchester City in 2020?", ["David Silva", "Carlos Vela", "Imanol Agirretxe", "Antoine Griezmann"], "David Silva"],
+    [6, "Who was Real Sociedad's manager when they qualified for the 2020-21 UEFA Champions League?", ["Jagoba Arrasate", "Imanol Alguacil", "David Moyes", "Markel Bergara"], "Imanol Alguacil"],
+    [7, "Which team did Real Sociedad famously beat 4-0 in the 2020-21 Copa del Rey final?", ["Athletic Bilbao", "Real Madrid", "Barcelona", "Valencia"], "Athletic Bilbao"],
+    [8, "In which year did Real Sociedad win their first-ever Copa del Rey?", ["1923", "1948", "1987", "2019"], "1987"],
+    [9, "Who was the last manager to take Real Sociedad into the UEFA Champions League?", ["Imanol Alguacil", "David Moyes", "Jagoba Arrasate", "Eusebio Sacristán"], "Imanol Alguacil"],
+    [10, "Which country does Real Sociedad's famous forward, Carlos Vela, represent internationally?", ["Spain", "Mexico", "Argentina", "Chile"], "Mexico"]
+    ],
+    "Sevilla": [
+    [1, "How many times has Sevilla won the UEFA Europa League?", ["5", "6", "7", "4"], "6"],
+    [2, "Who scored the winning goal for Sevilla in the 2006 UEFA Europa League final?", ["Frederic Kanouté", "Carlos Bacca", "José Antonio Reyes", "Ivan Rakitić"], "Frederic Kanouté"],
+    [3, "Which stadium is the home of Sevilla?", ["Santiago Bernabéu", "Camp Nou", "Ramón Sánchez Pizjuán", "Metropolitano"], "Ramón Sánchez Pizjuán"],
+    [4, "Who is Sevilla's all-time top scorer?", ["Luis Fabiano", "Carlos Bacca", "Antonio Puerta", "Fredi Kanouté"], "Fredi Kanouté"],
+    [5, "Who was the manager when Sevilla won their first UEFA Europa League?", ["Juande Ramos", "Unai Emery", "Luis Fabiano", "Carlos Bacca"], "Juande Ramos"],
+    [6, "In which year did Sevilla win their first UEFA Super Cup?", ["2005", "2006", "2007", "2014"], "2006"],
+    [7, "Which team did Sevilla defeat 3-2 in the 2014 UEFA Europa League final?", ["Benfica", "Dynamo Kyiv", "Valencia", "Juventus"], "Benfica"],
+    [8, "Which legendary Sevilla player tragically passed away in 2007?", ["Antonio Puerta", "Carlos Bacca", "José Antonio Reyes", "Luis Fabiano"], "Antonio Puerta"],
+    [9, "Which team did Sevilla beat 4-0 in the 2020 UEFA Europa League final?", ["Inter Milan", "Roma", "Manchester United", "Wolves"], "Inter Milan"],
+    [10, "In which season did Sevilla last reach the UEFA Champions League Round of 16?", ["2019-20", "2020-21", "2018-19", "2022-23"], "2020-21"]
+    ],
+    "Inter Milan": [
+    [1, "How many times has Inter Milan won the UEFA Champions League?", ["3", "2", "4", "5"], "3"],
+    [2, "Who scored the winning goal for Inter Milan in the 2010 UEFA Champions League final?", ["Diego Milito", "Samuel Eto'o", "Wesley Sneijder", "Goran Pandev"], "Diego Milito"],
+    [3, "Which stadium is the home of Inter Milan?", ["San Siro", "Stadio Olimpico", "Juventus Stadium", "Parc des Princes"], "San Siro"],
+    [4, "Who is Inter Milan's all-time top scorer?", ["Mauro Icardi", "Giuseppe Meazza", "Ronaldo Nazário", "Marco Van Basten"], "Giuseppe Meazza"],
+    [5, "Who was the manager when Inter Milan won the 2010 UEFA Champions League?", ["José Mourinho", "Antonio Conte", "Luciano Spalletti", "Roberto Mancini"], "José Mourinho"],
+    [6, "Which team did Inter Milan defeat 2-0 in the 1964 UEFA Champions League final?", ["Real Madrid", "Juventus", "Benfica", "AC Milan"], "Benfica"],
+    [7, "Who was Inter Milan’s star player in the 2009-10 season, contributing significantly to their treble-winning year?", ["Wesley Sneijder", "Diego Milito", "Samuel Eto'o", "Goran Pandev"], "Diego Milito"],
+    [8, "Which former Inter Milan player is known for being one of the best strikers of his generation and won two World Cups?", ["Ronaldo Nazário", "Zlatan Ibrahimović", "Diego Milito", "Mauro Icardi"], "Ronaldo Nazário"],
+    [9, "Who did Inter Milan defeat 3-1 in the 2021 Coppa Italia final?", ["Juventus", "AC Milan", "Napoli", "Roma"], "Juventus"],
+    [10, "Which year did Inter Milan last win Serie A before their 2020-21 victory?", ["2009", "2010", "2011", "2007"], "2007"]
+    ],
+    "AC Milan": [
+    [1, "How many times has AC Milan won the UEFA Champions League?", ["7", "5", "9", "4"], "7"],
+    [2, "Who scored the winning goal for AC Milan in the 2003 UEFA Champions League final?", ["Andriy Shevchenko", "Filippo Inzaghi", "Kaka", "Paolo Maldini"], "Filippo Inzaghi"],
+    [3, "Which stadium is the home of AC Milan?", ["San Siro", "Stadio Olimpico", "Allianz Stadium", "Parc des Princes"], "San Siro"],
+    [4, "Who is AC Milan’s all-time top scorer?", ["Alessandro Del Piero", "Paolo Maldini", "Filippo Inzaghi", "Kaka"], "Filippo Inzaghi"],
+    [5, "Who was AC Milan's manager during their 2003 UEFA Champions League victory?", ["Carlo Ancelotti", "Giovanni Trapattoni", "Arrigo Sacchi", "Alberto Zaccheroni"], "Carlo Ancelotti"],
+    [6, "In which year did AC Milan last win the Serie A title?", ["2004", "2011", "2009", "2010"], "2011"],
+    [7, "Which famous Brazilian player won the 2007 Ballon d'Or while playing for AC Milan?", ["Ronaldinho", "Ricardo Kaká", "Roberto Carlos", "Rivaldo"], "Ricardo Kaká"],
+    [8, "Which team did AC Milan beat 2-0 in the 2007 UEFA Champions League final?", ["Liverpool", "Juventus", "Manchester United", "Barcelona"], "Liverpool"],
+    [9, "Which player scored a famous last-minute header for AC Milan in the 2005 Champions League final?", ["Paolo Maldini", "Filippo Inzaghi", "Andriy Shevchenko", "Alessandro Nesta"], "Filippo Inzaghi"],
+    [10, "Which AC Milan legend is known as ‘Il Capitano’?", ["Filippo Inzaghi", "Alessandro Nesta", "Paolo Maldini", "Kaka"], "Paolo Maldini"]
+    ],
+    "Napoli": [
+    [1, "In which year did Napoli win their first Serie A title?", ["1986", "1987", "1990", "1991"], "1987"],
+    [2, "Who was the manager when Napoli won their 1987 Serie A title?", ["Diego Maradona", "Carlo Ancelotti", "Luigi De Canio", "Eugenio Corini"], "Diego Maradona"],
+    [3, "Which stadium is the home of Napoli?", ["San Paolo", "Stadio Olimpico", "Juventus Stadium", "San Siro"], "Stadio Diego Armando Maradona"],
+    [4, "Who is Napoli's all-time top scorer?", ["Diego Maradona", "Lorenzo Insigne", "Marek Hamšík", "Ezequiel Lavezzi"], "Marek Hamšík"],
+    [5, "Which team did Napoli defeat to win their first Coppa Italia in 1962?", ["Fiorentina", "Juventus", "Roma", "Atalanta"], "Fiorentina"],
+    [6, "Who was Napoli’s manager during their 2014 Coppa Italia victory?", ["Rafael Benítez", "Maurizio Sarri", "Carlo Ancelotti", "Luigi De Canio"], "Rafael Benítez"],
+    [7, "In which year did Napoli last win the Serie A title?", ["1989", "1990", "2023", "2021"], "2023"],
+    [8, "Who was Napoli’s key player during their 1989 UEFA Cup victory?", ["Diego Maradona", "Antonio Di Natale", "Fabio Cannavaro", "Lorenzo Insigne"], "Diego Maradona"],
+    [9, "Which famous Napoli player went on to play for Paris Saint-Germain?", ["Edinson Cavani", "Ezequiel Lavezzi", "Gonzalo Higuaín", "José Callejón"], "Ezequiel Lavezzi"],
+    [10, "In which season did Napoli finish second in Serie A, their best-ever position since 1990?", ["2013-14", "2015-16", "2017-18", "2022-23"], "2022-23"]
+    ],
+    "Juventus": [
+    [1, "In which year did Juventus win their first UEFA Champions League title?", ["1985", "1993", "1996", "2003"], "1985"],
+    [2, "Which team did Juventus defeat in the 1996 UEFA Champions League final?", ["Ajax", "Real Madrid", "Borussia Dortmund", "AC Milan"], "Ajax"],
+    [3, "How many UEFA Champions League titles has Juventus won?", ["1", "2", "3", "4"], "2"],
+    [4, "Which Juventus player scored in the 2015 UEFA Champions League final?", ["Paul Pogba", "Alvaro Morata", "Carlos Tévez", "Andrea Pirlo"], "Alvaro Morata"],
+    [5, "Which team eliminated Juventus in the 2017 UEFA Champions League final?", ["Barcelona", "Real Madrid", "Bayern Munich", "Liverpool"], "Real Madrid"],
+    [6, "Which Juventus player scored a hat-trick against Real Madrid in the 2018 UEFA Champions League quarter-finals?", ["Cristiano Ronaldo", "Gonzalo Higuaín", "Mario Mandzukic", "Paulo Dybala"], "Cristiano Ronaldo"],
+    [7, "What was the result of the 1997 UEFA Champions League final between Juventus and Borussia Dortmund?", ["1-0", "2-1", "3-1", "3-0"], "3-1"],
+    [8, "Which stadium hosted the 2017 UEFA Champions League final, where Juventus played?", ["San Siro", "Wembley", "Millennium Stadium", "Cardiff City Stadium"], "Millennium Stadium"],
+    [9, "In which year did Juventus last reach the final of the UEFA Champions League as of 2023?", ["2015", "2017", "2019", "2020"], "2017"],
+    [10, "Who was the manager of Juventus when they won the 1996 UEFA Champions League?", ["Marcello Lippi", "Antonio Conte", "Allegri", "Claudio Ranieri"], "Marcello Lippi"]
+    ],
+    "RB Leipzig": [
+    [1, "In which year did RB Leipzig make their debut in the UEFA Champions League group stage?", ["2017", "2018", "2019", "2020"], "2017"],
+    [2, "Which team did RB Leipzig famously defeat in the 2020 UEFA Champions League quarter-finals?", ["Atletico Madrid", "Paris Saint-Germain", "Tottenham Hotspur", "Bayern Munich"], "Atletico Madrid"],
+    [3, "Who was the manager of RB Leipzig when they reached the 2020 UEFA Champions League semi-finals?", ["Julian Nagelsmann", "Ralph Hasenhüttl", "Jesse Marsch", "Marco Rose"], "Julian Nagelsmann"],
+    [4, "Which RB Leipzig player scored a hat-trick in the 2020 UEFA Champions League quarter-finals?", ["Timo Werner", "Christopher Nkunku", "Marcel Sabitzer", "Angelino"], "Timo Werner"],
+    [5, "Which club did RB Leipzig face in their first-ever UEFA Champions League knockout round?", ["Paris Saint-Germain", "Tottenham Hotspur", "Real Madrid", "Shakhtar Donetsk"], "Tottenham Hotspur"],
+    [6, "Which stadium hosted the 2020 UEFA Champions League semi-final between RB Leipzig and Paris Saint-Germain?", ["Allianz Arena", "Parc des Princes", "Stamford Bridge", "Estádio da Luz"], "Estádio da Luz"],
+    [7, "Which RB Leipzig player scored the club's first-ever UEFA Champions League goal?", ["Timo Werner", "Yussuf Poulsen", "Marcel Sabitzer", "Christopher Nkunku"], "Yussuf Poulsen"],
+    [8, "How far did RB Leipzig reach in their first-ever UEFA Champions League campaign?", ["Group Stage", "Round of 16", "Quarter-Finals", "Semi-Finals"], "Semi-Finals"],
+    [9, "Which team eliminated RB Leipzig in the 2021 UEFA Champions League Round of 16?", ["Liverpool", "Paris Saint-Germain", "Manchester City", "Real Madrid"], "Liverpool"],
+    [10, "Who was RB Leipzig's top scorer in the 2020-21 UEFA Champions League season?", ["Christopher Nkunku", "Yussuf Poulsen", "Marcel Sabitzer", "Angelino"], "Christopher Nkunku"]
+    ],
+    "Paris Saint-Germain": [
+    [1, "In which year did Paris Saint-Germain reach their first-ever UEFA Champions League final?", ["2018", "2019", "2020", "2021"], "2020"],
+    [2, "Which team did Paris Saint-Germain face in the 2020 UEFA Champions League final?", ["Bayern Munich", "Liverpool", "Real Madrid", "Juventus"], "Bayern Munich"],
+    [3, "Who scored Paris Saint-Germain's winning goal in their 2016-17 UEFA Champions League Round of 16 tie against Barcelona?", ["Edinson Cavani", "Neymar", "Kylian Mbappé", "Angel Di María"], "Edinson Cavani"],
+    [4, "Who was the manager of Paris Saint-Germain during their 2020 UEFA Champions League campaign?", ["Unai Emery", "Thomas Tuchel", "Mauricio Pochettino", "Laurent Blanc"], "Thomas Tuchel"],
+    [5, "Which stadium hosted the 2020 UEFA Champions League final between Paris Saint-Germain and Bayern Munich?", ["Parc des Princes", "Stade de France", "Allianz Arena", "Estádio da Luz"], "Estádio da Luz"],
+    [6, "Who scored Paris Saint-Germain's first-ever goal in the UEFA Champions League group stage?", ["Neymar", "Edinson Cavani", "Kylian Mbappé", "Zlatan Ibrahimović"], "Zlatan Ibrahimović"],
+    [7, "In which season did Paris Saint-Germain make their first-ever appearance in the UEFA Champions League final?", ["2013-14", "2015-16", "2017-18", "2019-20"], "2019-20"],
+    [8, "Which team eliminated Paris Saint-Germain in the 2019 UEFA Champions League Round of 16?", ["Barcelona", "Real Madrid", "Manchester United", "Bayern Munich"], "Manchester United"],
+    [9, "Who scored the most goals for Paris Saint-Germain in the 2020 UEFA Champions League campaign?", ["Kylian Mbappé", "Neymar", "Edinson Cavani", "Mauro Icardi"], "Neymar"],
+    [10, "Which Paris Saint-Germain player famously scored a stunning bicycle kick against Club Brugge in the 2019-20 UEFA Champions League?", ["Kylian Mbappé", "Angel Di María", "Neymar", "Mauro Icardi"], "Neymar"]
+    ],
+    "Benfica": [
+    [1, "In which year did Benfica win their first-ever UEFA Champions League title?", ["1961", "1962", "1963", "1965"], "1961"],
+    [2, "Which team did Benfica defeat in the 1962 UEFA Champions League final?", ["Real Madrid", "Barcelona", "Juventus", "Barcelona"], "Real Madrid"],
+    [3, "Who was Benfica's manager during their 1962 UEFA Champions League victory?", ["Béla Guttmann", "Jorge Jesus", "Rui Vitória", "Ernesto Valverde"], "Béla Guttmann"],
+    [4, "Who scored the winning goal for Benfica in the 1962 UEFA Champions League final?", ["Eusébio", "José Águas", "Mário Coluna", "Alfredo Di Stéfano"], "José Águas"],
+    [5, "In which season did Benfica last reach the UEFA Champions League final?", ["2004-05", "2013-14", "2015-16", "2017-18"], "2013-14"],
+    [6, "Which team eliminated Benfica in the 2013-14 UEFA Champions League semi-finals?", ["Chelsea", "Real Madrid", "Bayern Munich", "Juventus"], "Chelsea"],
+    [7, "Which stadium is home to Benfica?", ["Estádio da Luz", "Parc des Princes", "Stadio Olimpico", "Allianz Arena"], "Estádio da Luz"],
+    [8, "Which Benfica player scored a memorable goal against Barcelona in the 2012-13 UEFA Champions League?", ["Oscar Cardozo", "Salvio", "Jorge Jesus", "Eduardo Salvio"], "Eduardo Salvio"],
+    [9, "Which legendary Portuguese player played for Benfica and became one of their most iconic figures?", ["Eusébio", "Luis Figo", "Cristiano Ronaldo", "Ricardo Quaresma"], "Eusébio"],
+    [10, "In the 2019-20 UEFA Champions League, which group was Benfica placed in?", ["Group G", "Group B", "Group C", "Group A"], "Group G"]
+    ],
+    "Braga": [
+    [1, "In which season did Braga make their first-ever appearance in the UEFA Champions League group stage?", ["2009-10", "2011-12", "2007-08", "2013-14"], "2011-12"],
+    [2, "Which team did Braga face in the 2011-12 UEFA Champions League group stage?", ["Arsenal", "Barcelona", "Manchester City", "Real Madrid"], "Arsenal"],
+    [3, "Which player scored Braga's first-ever goal in the UEFA Champions League?", ["Alan", "Mossoro", "Hugo Viana", "Eder"], "Alan"],
+    [4, "In which season did Braga reach the UEFA Europa League final?", ["2010-11", "2012-13", "2009-10", "2014-15"], "2010-11"],
+    [5, "Which club did Braga face in the 2010-11 UEFA Europa League final?", ["Porto", "Chelsea", "Bayer Leverkusen", "Manchester City"], "Porto"],
+    [6, "Who was the manager of Braga during their 2010-11 UEFA Europa League final campaign?", ["Domingos Paciência", "José Peseiro", "Paulo Fonseca", "Jorge Jesus"], "Domingos Paciência"],
+    [7, "Which team eliminated Braga in the 2019-20 UEFA Europa League Round of 32?", ["Rangers", "Fiorentina", "Roma", "Arsenal"], "Rangers"],
+    [8, "What is the name of Braga's home stadium?", ["Estádio Municipal de Braga", "Estádio da Luz", "Estádio do Dragão", "Estádio José Alvalade"], "Estádio Municipal de Braga"],
+    [9, "Who was the top scorer for Braga in the 2011-12 UEFA Champions League group stage?", ["Eder", "Alan", "Mossoro", "Luisão"], "Alan"],
+    [10, "In which season did Braga finish as runners-up in the Primeira Liga for the first time?", ["2009-10", "2010-11", "2012-13", "2014-15"], "2009-10"]
+    ],
+    "Feyenoord": [
+    [1, "In which season did Feyenoord make their first-ever appearance in the UEFA Champions League group stage?", ["1997-98", "1999-2000", "2002-03", "2014-15"], "1999-2000"],
+    [2, "Which team did Feyenoord famously defeat in the 2002 UEFA Cup final?", ["Borussia Dortmund", "Manchester United", "Liverpool", "Bayern Munich"], "Borussia Dortmund"],
+    [3, "Who scored the winning goal for Feyenoord in the 2002 UEFA Cup final?", ["Jon Dahl Tomasson", "Pierre van Hooijdonk", "Ruud Gullit", "Wim Jonk"], "Jon Dahl Tomasson"],
+    [4, "Which player is Feyenoord's all-time top scorer?", ["Robin van Persie", "Dirk Kuyt", "Jean-Paul Boëtius", "Pierre van Hooijdonk"], "Pierre van Hooijdonk"],
+    [5, "Which stadium is the home of Feyenoord?", ["De Kuip", "Amsterdam Arena", "Philips Stadion", "Gelredome"], "De Kuip"],
+    [6, "Who was the manager of Feyenoord when they won the Eredivisie in 2017?", ["Giovanni van Bronckhorst", "Fred Rutten", "Ronald Koeman", "Dick Advocaat"], "Giovanni van Bronckhorst"],
+    [7, "Which club did Feyenoord face in the 2017 Eredivisie title-deciding match?", ["Ajax", "PSV Eindhoven", "AZ Alkmaar", "Vitesse"], "Ajax"],
+    [8, "Which Feyenoord player scored a hat-trick in the 2017-18 UEFA Europa League group stage?", ["Jørgen Strand Larsen", "Robin van Persie", "Steven Berghuis", "Tonny Vilhena"], "Robin van Persie"],
+    [9, "In which year did Feyenoord win their first European Cup/Champions League title?", ["1969", "1970", "1980", "1999"], "1970"],
+    [10, "Who was the manager of Feyenoord during their first European Cup triumph in 1970?", ["Rinus Michels", "Johan Cruyff", "Ferry de Haan", "Georg Kessler"], "Rinus Michels"]
+    ],
+    "PSV Eindhoven": [
+    [1, "In which season did PSV Eindhoven win their first-ever UEFA Champions League title?", ["1988", "1992", "1995", "2000"], "1988"],
+    [2, "Which team did PSV Eindhoven defeat in the 1988 European Cup final?", ["Sampdoria", "Real Madrid", "AC Milan", "Bayern Munich"], "Sampdoria"],
+    [3, "Who scored the winning penalty for PSV Eindhoven in the 1988 European Cup final?", ["Ruud Gullit", "Marco van Basten", "André Ooijer", "Johnny Metgod"], "Johnny Metgod"],
+    [4, "Which PSV Eindhoven player is the club's all-time top scorer?", ["Ruud van Nistelrooy", "Arjen Robben", "Ruud Gullit", "Ruud Krol"], "Ruud van Nistelrooy"],
+    [5, "Which stadium is the home of PSV Eindhoven?", ["De Kuip", "Philips Stadion", "Amsterdam Arena", "Gelredome"], "Philips Stadion"],
+    [6, "Who was the manager of PSV Eindhoven when they won the Eredivisie title in 2018-19?", ["Mark van Bommel", "Dick Advocaat", "Guus Hiddink", "Ronald Koeman"], "Mark van Bommel"],
+    [7, "Which PSV Eindhoven player scored a memorable goal against S.L. Benfica in the 2005-06 UEFA Champions League?", ["Arjen Robben", "Ruud van Nistelrooy", "Ruud Gullit", "Jan Vennegoor of Hesselink"], "Arjen Robben"],
+    [8, "In which season did PSV Eindhoven last reach the semi-finals of the UEFA Champions League?", ["2004-05", "2005-06", "2006-07", "2007-08"], "2004-05"],
+    [9, "Who is PSV Eindhoven's most famous player from the 1988 European Cup-winning squad?", ["Marco van Basten", "Ruud Gullit", "Arjen Robben", "Ronaldo Nazário"], "Ruud Gullit"],
+    [10, "Which team did PSV Eindhoven defeat in the 1988 European Cup final after a penalty shootout?", ["Sampdoria", "AC Milan", "Real Madrid", "Bayern Munich"], "Sampdoria"]
+    ],
+    "Red Bull Salzburg": [
+    [1, "In which year did Red Bull Salzburg win their first Austrian Bundesliga title?", ["2004", "2007", "2011", "2015"], "2007"],
+    [2, "Which stadium is the home of Red Bull Salzburg?", ["Ernst Happel Stadion", "Red Bull Arena", "Waldstadion", "Stadion an der Alten Försterei"], "Red Bull Arena"],
+    [3, "Who is Red Bull Salzburg's all-time top scorer in UEFA Champions League history?", ["Valon Berisha", "Jonatan Soriano", "Munas Dabbur", "Hwang Hee-chan"], "Munas Dabbur"],
+    [4, "In which season did Red Bull Salzburg first appear in the UEFA Champions League group stage?", ["2011-12", "2012-13", "2014-15", "2017-18"], "2017-18"],
+    [5, "Which club did Red Bull Salzburg famously defeat to reach the 2018-19 UEFA Europa League semi-finals?", ["Bayer Leverkusen", "Napoli", "Borussia Dortmund", "Real Madrid"], "Borussia Dortmund"],
+    [6, "Who was the manager of Red Bull Salzburg when they won the 2014-15 Austrian Bundesliga?", ["Adolf Hütter", "Marco Rose", "Jesse Marsch", "Matthias Jaissle"], "Adolf Hütter"],
+    [7, "Which famous player played for Red Bull Salzburg before joining RB Leipzig?", ["Timo Werner", "Naby Keita", "Dominik Szoboszlai", "Emil Forsberg"], "Naby Keita"],
+    [8, "Which team did Red Bull Salzburg face in the 2020-21 UEFA Champions League group stage?", ["Bayern Munich", "Liverpool", "Juventus", "Paris Saint-Germain"], "Bayern Munich"],
+    [9, "Which former Red Bull Salzburg player went on to join FC Barcelona in 2019?", ["Dominik Szoboszlai", "Takumi Minamino", "Mohamed Salah", "Konrad Laimer"], "Dominik Szoboszlai"],
+    [10, "Red Bull Salzburg's largest win in a UEFA competition came against which team?", ["Maccabi Haifa", "LASK Linz", "Bohemians", "Dynamo Kyiv"], "Maccabi Haifa"]
+    ],
+    "Celtic": [
+    [1, "In which year did Celtic win their first European Cup title?", ["1965", "1967", "1972", "1980"], "1967"],
+    [2, "Which stadium is the home of Celtic?", ["Ibrox Stadium", "Celtic Park", "Hampden Park", "Murrayfield"], "Celtic Park"],
+    [3, "Who is Celtic's all-time top scorer in UEFA competitions?", ["Henrik Larsson", "Jimmy Johnstone", "Kenny Dalglish", "Scott Sinclair"], "Henrik Larsson"],
+    [4, "Which club did Celtic defeat in the 1967 European Cup final?", ["Inter Milan", "Real Madrid", "Benfica", "AC Milan"], "Inter Milan"],
+    [5, "Who was the manager of Celtic during their 2003 UEFA Cup final run?", ["Martin O'Neill", "Brendan Rodgers", "Neil Lennon", "Gordon Strachan"], "Martin O'Neill"],
+    [6, "Which team did Celtic famously beat 2-1 in the 2003 UEFA Champions League group stage?", ["Manchester United", "Juventus", "Real Madrid", "AC Milan"], "Juventus"],
+    [7, "In which year did Celtic win their most recent Scottish Premiership title?", ["2018", "2019", "2020", "2021"], "2021"],
+    [8, "Which famous Celtic player played for Barcelona between 2010 and 2013?", ["Scott Brown", "Kieran Tierney", "Victor Wanyama", "Gary Hooper"], "Victor Wanyama"],
+    [9, "Who scored Celtic's winning goal in the 2019 Scottish Cup final?", ["Odsonne Édouard", "Ryan Christie", "Tom Rogic", "James Forrest"], "Odsonne Édouard"],
+    [10, "Which famous player is known for his legendary 'Lennon Header' during the 2003 UEFA Cup run?", ["Neil Lennon", "John Hartson", "Henrik Larsson", "Chris Sutton"], "Neil Lennon"]
+    ],
+    "Shakhtar Donetsk": [
+    [1, "In which year did Shakhtar Donetsk win their first UEFA Cup (now Europa League) title?", ["2007", "2009", "2011", "2013"], "2009"],
+    [2, "Which stadium is the home of Shakhtar Donetsk?", ["Metalist Stadium", "Lviv Arena", "Donbass Arena", "Olympic Stadium"], "Donbass Arena"],
+    [3, "Who was Shakhtar Donetsk's manager when they won the 2009 UEFA Cup?", ["Mircea Lucescu", "Luiz Felipe Scolari", "Roberto De Zerbi", "Paulo Fonseca"], "Mircea Lucescu"],
+    [4, "Which famous Brazilian player is known for playing a key role in Shakhtar Donetsk's attack?", ["Alex Teixeira", "Willian", "Douglas Costa", "Jadson"], "Willian"],
+    [5, "Which team did Shakhtar Donetsk defeat in the 2009 UEFA Cup final?", ["Werder Bremen", "FC Porto", "Braga", "Fulham"], "Werder Bremen"],
+    [6, "How many times has Shakhtar Donetsk won the Ukrainian Premier League as of 2023?", ["10", "12", "14", "16"], "14"],
+    [7, "In which season did Shakhtar Donetsk first qualify for the UEFA Champions League group stage?", ["2000-01", "2001-02", "2004-05", "2008-09"], "2004-05"],
+    [8, "Who is Shakhtar Donetsk's all-time top scorer in European competitions?", ["Alex Teixeira", "Henrikh Mkhitaryan", "Luis Adriano", "Jadson"], "Luis Adriano"],
+    [9, "Which country is Shakhtar Donetsk's all-time top scorer, Luiz Adriano, originally from?", ["Brazil", "Ukraine", "Argentina", "Portugal"], "Brazil"],
+    [10, "Which player scored a hat-trick for Shakhtar Donetsk against Roma in the 2020-21 UEFA Champions League?", ["Junior Moraes", "Alan Patrick", "Taison", "Manor Solomon"], "Junior Moraes"]
+    ],
+    "Antwerp": [
+    [1, "In which year did Antwerp last win the Belgian Pro League?", ["1995", "1999", "2000", "2003"], "2000"],
+    [2, "Which stadium is the home of Antwerp?", ["Constant Vanden Stock Stadium", "Bosuilstadion", "Jan Breydel Stadium", "Ghelamco Arena"], "Bosuilstadion"],
+    [3, "Which Belgian club did Antwerp famously defeat in the 1993-94 UEFA Cup?", ["Club Brugge", "Anderlecht", "Gent", "Genk"], "Anderlecht"],
+    [4, "In which season did Antwerp return to the UEFA Champions League group stage for the first time since 1994?", ["2017-18", "2019-20", "2020-21", "2022-23"], "2020-21"],
+    [5, "Which Antwerp player scored the winning goal in the 1993-94 UEFA Cup final against the German club?", ["Marc Degryse", "Erik Meijer", "Johan Boskamp", "Yves Vanderhaeghe"], "Marc Degryse"],
+    [6, "Which famous manager led Antwerp to win the Belgian Cup in 1992?", ["Frank Vercauteren", "Herman Helleputte", "Walter Meeuws", "László Bölöni"], "László Bölöni"],
+    [7, "Which country is Antwerp's famous striker, Radja Nainggolan, originally from?", ["Belgium", "Italy", "Indonesia", "Algeria"], "Belgium"],
+    [8, "What is Antwerp's nickname?", ["The Great Old", "The Red Devils", "The Pride of Belgium", "The Mighty Reds"], "The Great Old"],
+    [9, "In which year did Antwerp win their first Belgian Cup?", ["1940", "1950", "1960", "1992"], "1950"],
+    [10, "Which team eliminated Antwerp in the 2020-21 UEFA Champions League qualification?", ["AZ Alkmaar", "Celtic", "Dynamo Kyiv", "Olympiacos"], "Olympiacos"]
+    ],
+    "Young Boys": [
+    [1, "In which year did Young Boys win their first Swiss Super League title?", ["1950", "1960", "1986", "2005"], "1958"],
+    [2, "Which stadium is the home of Young Boys?", ["Kybunpark", "Letzigrund", "Wankdorf Stadium", "Stade de Suisse"], "Wankdorf Stadium"],
+    [3, "Which Swiss club has Young Boys' biggest domestic rivalry with?", ["Basel", "Zurich", "Lausanne", "St. Gallen"], "Basel"],
+    [4, "How many times has Young Boys won the Swiss Super League title as of 2023?", ["10", "12", "15", "16"], "15"],
+    [5, "Which famous striker played for Young Boys before moving to Borussia Dortmund?", ["Alexandre Jankewitz", "Kevin Mbabu", "Cédric Itten", "Meschack Elia"], "Cédric Itten"],
+    [6, "In which season did Young Boys first qualify for the UEFA Champions League group stage?", ["2008-09", "2017-18", "2020-21", "2021-22"], "2018-19"],
+    [7, "Which team did Young Boys famously defeat 2-1 in the 2021-22 UEFA Champions League group stage?", ["Manchester United", "Juventus", "Bayern Munich", "Lazio"], "Manchester United"],
+    [8, "Which country is Young Boys' star player, Jean-Pierre Nsame, originally from?", ["Cameroon", "Switzerland", "France", "Ivory Coast"], "Cameroon"],
+    [9, "Which Swiss manager guided Young Boys to their 2018-19 league title?", ["Gerardo Seoane", "Christian Gross", "Urs Fischer", "Adrián Ursea"], "Gerardo Seoane"],
+    [10, "Who is Young Boys' all-time top scorer in European competitions?", ["Jean-Pierre Nsame", "Michel Aebischer", "Roger Wehrli", "Giuseppe Murolo"], "Jean-Pierre Nsame"]
+    ],
+    "Galatasaray": [
+    [1, "In which year did Galatasaray win their first UEFA Cup?", ["1999", "2000", "2002", "2005"], "2000"],
+    [2, "Which stadium is the home of Galatasaray?", ["Ali Sami Yen Stadium", "Türk Telekom Stadium", "Fenerbahçe Şükrü Saracoğlu Stadium", "Beşiktaş Park"], "Türk Telekom Stadium"],
+    [3, "Which Turkish club is Galatasaray's biggest domestic rival?", ["Fenerbahçe", "Beşiktaş", "Trabzonspor", "Bursaspor"], "Fenerbahçe"],
+    [4, "Who was the manager when Galatasaray won the 2000 UEFA Cup and Super Cup?", ["Fatih Terim", "Mustafa Denizli", "Mircea Lucescu", "Gheorghe Hagi"], "Fatih Terim"],
+    [5, "Which Galatasaray player scored the decisive penalty in the 2000 UEFA Cup final against Arsenal?", ["Hakan Şükür", "Bülent Korkmaz", "Galip Çetin", "Umit Davala"], "Hakan Şükür"],
+    [6, "Which country is Galatasaray's star player, Arda Turan, originally from?", ["Turkey", "Spain", "Germany", "France"], "Turkey"],
+    [7, "In which season did Galatasaray last qualify for the UEFA Champions League knockout stages?", ["2014-15", "2017-18", "2019-20", "2020-21"], "2014-15"],
+    [8, "Which club did Galatasaray famously defeat in the 2013-14 UEFA Champions League round of 16?", ["Real Madrid", "Chelsea", "Juventus", "Schalke"], "Schalke"],
+    [9, "Which former Galatasaray player went on to play for Chelsea in the Premier League?", ["Garry Rodrigues", "Didier Drogba", "Emmanuel Eboué", "Arda Turan"], "Didier Drogba"],
+    [10, "Which year did Galatasaray win their first Turkish Süper Lig title?", ["1950", "1961", "1984", "1987"], "1961"]
+    ],
+    "Porto": [
+    [1, "In which year did Porto win their first UEFA Champions League title?", ["1987", "2000", "2004", "2006"], "1987"],
+    [2, "Which manager led Porto to their 2004 UEFA Champions League victory?", ["Jorge Jesus", "André Villas-Boas", "José Mourinho", "Luiz Felipe Scolari"], "José Mourinho"],
+    [3, "Which stadium is the home of Porto?", ["Estádio da Luz", "Estádio do Dragão", "Alvalade", "Estádio José Alvalade"], "Estádio do Dragão"],
+    [4, "Who scored Porto's winning goal in the 2004 UEFA Champions League final against AS Monaco?", ["Ricardo Quaresma", "Deco", "Hélder Postiga", "Carlos Alberto"], "Carlos Alberto"],
+    [5, "Which Portuguese club is Porto's biggest domestic rival?", ["Benfica", "Sporting CP", "Boavista", "Braga"], "Benfica"],
+    [6, "Which Porto player won the UEFA Champions League Golden Boot in 2004?", ["Fernando Gomes", "Lisandro López", "Jorge Costa", "Ricardo Quaresma"], "Lisandro López"],
+    [7, "Which club did Porto famously defeat 6-1 in the 2015-16 UEFA Champions League round of 16?", ["Paris Saint-Germain", "Bayern Munich", "Chelsea", "Bayer Leverkusen"], "Bayer Leverkusen"],
+    [8, "Which Porto player went on to play for Chelsea in 2017?", ["Ricardo Pereira", "Alex Telles", "Ruben Neves", "André André"], "Alex Telles"],
+    [9, "Which year did Porto win their last Portuguese Liga title (as of 2023)?", ["2019", "2021", "2022", "2023"], "2020"],
+    [10, "In which season did Porto reach the UEFA Champions League quarter-finals for the first time?", ["1984-85", "1997-98", "2003-04", "2010-11"], "1984-85"]
+    ],
+    "Crvena zvezda": [
+        [1, "In what year did Crvena zvezda win its only European Cup?", ["1989", "1991", "1993", "1995"], "1991"],
+        [2, "Which team did Crvena zvezda defeat in the 1990-91 European Cup final?", ["Barcelona", "AC Milan", "Marseille", "Real Madrid"], "Marseille"],
+        [3, "In which country does Crvena zvezda play?", ["Croatia", "Slovenia", "Serbia", "Bosnia and Herzegovina"], "Serbia"],
+        [4, "What is Crvena zvezda's stadium?", ["Partizan Stadium", "Rajko Mitić Stadium", "Maksimir Stadium", "Marakana"], "Rajko Mitić Stadium"],
+        [5, "Who is Crvena zvezda's biggest rival in Serbian football?", ["Vojvodina", "Radnički Niš", "Partizan", "Napredak"], "Partizan"],
+        [6, "Which of these players played for Crvena zvezda before becoming famous?", ["Luka Modrić", "Dejan Stanković", "Branislav Ivanović", "Nemanja Vidić"], "Dejan Stanković"],
+        [7, "How many times has Crvena zvezda won the Serbian league (until 2023)?", ["20", "25", "30", "35"], "30"],
+        [8, "In which UEFA Champions League season did Crvena zvezda first play in the group stage in the modern era?", ["2000-01", "2005-06", "2018-19", "2020-21"], "2018-19"],
+        [9, "Which of these teams was not in Crvena zvezda's group in the 2018-19 UEFA Champions League?", ["Liverpool", "Napoli", "PSG", "Juventus"], "Juventus"],
+        [10, "Which of these trophies has Crvena zvezda won?", ["Europa League", "UEFA Super Cup", "Intercontinental Cup", "Cup Winners' Cup"], "Intercontinental Cup"]
+    ],
+    "Lens": [
+        [1, "In what year did Lens win its only Ligue 1 title?", ["1994", "1996", "1998", "2000"], "1998"],
+        [2, "What is the stadium where Lens plays its home matches?", ["Parc des Princes", "Stade Vélodrome", "Stade Félix-Bollaert", "Stade Pierre-Mauroy"], "Stade Félix-Bollaert"],
+        [3, "What is the most well-known nickname of RC Lens?", ["Les Sang et Or", "Les Dogues", "Les Canaris", "Les Verts"], "Les Sang et Or"],
+        [4, "Who is Lens' main rival in French football?", ["Lille", "PSG", "Marseille", "Lyon"], "Lille"],
+        [5, "In which season did Lens first play in the UEFA Champions League group stage?", ["1995-96", "1998-99", "2000-01", "2002-03"], "1998-99"],
+        [6, "Which team did Lens famously defeat at Old Trafford in the 1998-99 Champions League qualifying round?", ["Arsenal", "Manchester United", "Liverpool", "Chelsea"], "Arsenal"],
+        [7, "Which team eliminated Lens in its last UEFA Champions League group stage appearance before the 2023-24 season?", ["Bayern Munich", "PSG", "AC Milan", "Deportivo La Coruña"], "Deportivo La Coruña"],
+        [8, "Which of these players is a Lens legend?", ["Didier Drogba", "Raphaël Varane", "Claude Makélélé", "Patrick Vieira"], "Raphaël Varane"],
+        [9, "In which region of France is RC Lens located?", ["Normandy", "Hauts-de-France", "Alsace", "Occitania"], "Hauts-de-France"],
+        [10, "Which color dominates Lens' kit besides red?", ["Blue", "Green", "Gold", "Black"], "Gold"]
+    ]
+    }
+
+    groups_stage = True
+    player_team_points = 0
+    match_counter = 1  # Counter for matches
+    opponent_results = []  # List to store match results of opponents
+
+    print("-" * 60)
+
+    while groups_stage:
+        for opponent in opponent_list:
+            print(f"\nMatch against: {opponent}\n")
+            print(questions[opponent][question_number - 1][1])
+            print("\n")
+            for option in questions[opponent][question_number - 1][2]:
+                print(option)
+            print("\n")
+
+            answer = input("Type your answer: ")
             
-            #print(f"{group_stage_teams_counter} - {group_stage_teams[index-1]}")
-            group_stage_teams_counter += 1  # Increment counter
-    else:
-        ACTIVE = False  # Stop loop when all teams have been assigned
 
-# Print out the final groups
-print()
-for group in groups:
-    print("-"*10 + group[0] + "-"*10)
-    for team in group[1:]:  # Skip group name when printing teams
-        if team == player_team: # If the team is the player's chosen team, add an identifier "*" before its name.
-            print(f"* {team}")
-        else:
-            print(f"{team}")
-
-for group in groups:
-    if player_team in group:
-        player_team_group_name = group[0]
-        player_team_group = group
-        print(f"\n\nYour team: {player_team} has been assigned to {group[0]}!")
-        player_group = group
-
-input("\n\nLet's generate the group stage matches. Press Enter to continue. \n")
-
-opponent_counter = 1
-opponent_list = []
-print("\n")
-for opponent in player_group[1:]:
-    if opponent != player_team:
-        print(f"Match #{opponent_counter}: {opponent}")
-        opponent_list.append(opponent)
-        opponent_counter += 1
-print("\n")
-
-question_number = random.randint(1,10)
-#print(question_number)
-questions = {
-"Borussia Dortmund": [
-       [1, "In which season did Borussia Dortmund win their first and only UEFA Champions League title?", ["1995-96", "1996-97", "1997-98", "1998-99"], "1996-97"],
-       [2, "Who scored Borussia Dortmund's first goal in the 1997 UEFA Champions League final against Juventus?", ["Karl-Heinz Riedle", "Lars Ricken", "Andreas Möller", "Paulo Sousa"], "Karl-Heinz Riedle"],
-       [3, "Which team did Borussia Dortmund defeat in the 1997 UEFA Champions League final?", ["AC Milan", "Real Madrid", "Juventus", "Manchester United"], "Juventus"],
-       [4, "What was the final score of the 1997 UEFA Champions League final between Borussia Dortmund and Juventus?", ["1-0", "2-1", "3-1", "4-2"], "3-1"],
-       [5, "Who scored Borussia Dortmund's third goal in the 1997 UEFA Champions League final, just seconds after coming on as a substitute?", ["Lars Ricken", "Jürgen Kohler", "Stefan Reuter", "Matthias Sammer"], "Lars Ricken"],
-       [6, "Which stadium hosted the 1997 UEFA Champions League final where Borussia Dortmund won the title?", ["San Siro", "Old Trafford", "Olympiastadion", "Stade de France"], "Olympiastadion"],
-       [7, "Which team knocked Borussia Dortmund out in the 2012-13 UEFA Champions League final?", ["Real Madrid", "Manchester United", "Bayern Munich", "Barcelona"], "Bayern Munich"],
-       [8, "Who was Borussia Dortmund's top scorer in the 2012-13 UEFA Champions League season?", ["Marco Reus", "Mario Götze", "Robert Lewandowski", "Jakub Błaszczykowski"], "Robert Lewandowski"],
-       [9, "In which stadium was the 2012-13 UEFA Champions League final between Borussia Dortmund and Bayern Munich played?", ["Allianz Arena", "Wembley Stadium", "Signal Iduna Park", "Camp Nou"], "Wembley Stadium"],
-       [10, "Who was Borussia Dortmund's head coach when they won the 1997 UEFA Champions League?", ["Jürgen Klopp", "Thomas Tuchel", "Ottmar Hitzfeld", "Lucien Favre"], "Ottmar Hitzfeld"]
-   ],
-"Copenhagen": [
-       [1, "In which season did Copenhagen make their first-ever appearance in the UEFA Champions League group stage?", ["2005-06", "2006-07", "2007-08", "2008-09"], "2006-07"],
-       [2, "Which team did Copenhagen famously defeat in the 2006-07 UEFA Champions League group stage?", ["Manchester United", "AC Milan", "Barcelona", "Real Madrid"], "Manchester United"],
-       [3, "Which Danish club is Copenhagen's biggest domestic rival?", ["Brøndby IF", "FC Midtjylland", "AGF Aarhus", "Odense BK"], "Brøndby IF"],
-       [4, "How far did Copenhagen reach in their best-ever UEFA Champions League campaign?", ["Group Stage", "Round of 16", "Quarter-Finals", "Semi-Finals"], "Round of 16"],
-       [5, "Which famous stadium is the home of Copenhagen?", ["Telia Parken", "Brøndby Stadium", "MCH Arena", "NRGi Park"], "Telia Parken"],
-       [6, "Which Copenhagen player scored the club's first-ever goal in the UEFA Champions League?", ["Marcus Allbäck", "Jesper Grønkjær", "Dame N'Doye", "Zeca"], "Marcus Allbäck"],
-       [7, "Who was the manager when Copenhagen reached the Round of 16 in the 2010-11 UEFA Champions League?", ["Ståle Solbakken", "Ariël Jacobs", "Jess Thorup", "Michael Laudrup"], "Ståle Solbakken"],
-       [8, "Against which club did Copenhagen secure their first-ever UEFA Champions League group stage victory?", ["Celtic", "Galatasaray", "Ajax", "Club Brugge"], "Celtic"],
-       [9, "Which former Copenhagen player went on to win the UEFA Champions League with Chelsea in 2012?", ["Jesper Grønkjær", "Andreas Christensen", "William Kvist", "Thomas Delaney"], "Andreas Christensen"],
-       [10, "In the 2022-23 UEFA Champions League, which group was Copenhagen placed in?", ["Group A", "Group B", "Group C", "Group D"], "Group G"]
-   ],
-"Bayern Munich": [
-       [1, "In which year did Bayern Munich win their first UEFA Champions League title?", ["1972", "1974", "1976", "1978"], "1974"],
-       [2, "Which team did Bayern Munich defeat in the 2012-13 UEFA Champions League final?", ["Real Madrid", "Barcelona", "Borussia Dortmund", "Juventus"], "Borussia Dortmund"],
-       [3, "Who scored the winning goal for Bayern Munich in the 2013 UEFA Champions League final?", ["Mario Mandzukic", "Arjen Robben", "Franck Ribéry", "Thomas Müller"], "Arjen Robben"],
-       [4, "How many times has Bayern Munich won the UEFA Champions League as of 2023?", ["5", "6", "7", "8"], "6"],
-       [5, "Which club did Bayern Munich defeat 8-2 in the 2019-20 UEFA Champions League quarter-finals?", ["Manchester City", "Paris Saint-Germain", "Barcelona", "Chelsea"], "Barcelona"],
-       [6, "Who was Bayern Munich's head coach when they won the 2019-20 UEFA Champions League?", ["Niko Kovač", "Jupp Heynckes", "Hansi Flick", "Pep Guardiola"], "Hansi Flick"],
-       [7, "Which Bayern Munich player scored a hat-trick in the 2015 UEFA Champions League semi-final against Porto?", ["Robert Lewandowski", "Thomas Müller", "Philippe Coutinho", "Thiago Alcântara"], "Robert Lewandowski"],
-       [8, "Which club did Bayern Munich defeat in the 2020 UEFA Champions League final?", ["Paris Saint-Germain", "Real Madrid", "Manchester United", "Atletico Madrid"], "Paris Saint-Germain"],
-       [9, "Which Bayern Munich player holds the record for the fastest hat-trick in UEFA Champions League history?", ["Serge Gnabry", "Robert Lewandowski", "Thomas Müller", "Franck Ribéry"], "Robert Lewandowski"],
-       [10, "Which stadium hosted Bayern Munich’s 2012 UEFA Champions League final against Chelsea?", ["Old Trafford", "Camp Nou", "Allianz Arena", "Wembley Stadium"], "Allianz Arena"]
-   ],
-"Lazio": [
-       [1, "In which season did Lazio make their first-ever appearance in the UEFA Champions League group stage?", ["1997-98", "1998-99", "1999-2000", "2000-01"], "1999-2000"],
-       [2, "Lazio reached the quarter-finals of the UEFA Champions League in which season?", ["1997-98", "1999-2000", "2001-02", "2003-04"], "1999-2000"],
-       [3, "Which club eliminated Lazio in the 1999-2000 UEFA Champions League quarter-finals?", ["Real Madrid", "Valencia", "Manchester United", "Juventus"], "Valencia"],
-       [4, "Who was Lazio's top scorer in the 1999-2000 UEFA Champions League campaign?", ["Hernán Crespo", "Marcelo Salas", "Pavel Nedvěd", "Juan Sebastián Verón"], "Hernán Crespo"],
-       [5, "Which legendary Lazio captain played a crucial role in their 1999-2000 UEFA Champions League run?", ["Giuseppe Favalli", "Alessandro Nesta", "Diego Simeone", "Sinisa Mihajlovic"], "Alessandro Nesta"],
-       [6, "Which group did Lazio finish at the top of during the 1999-2000 UEFA Champions League second group stage?", ["Group A", "Group B", "Group C", "Group D"], "Group D"],
-       [7, "Lazio returned to the UEFA Champions League in which season after a long absence since 2007-08?", ["2012-13", "2014-15", "2015-16", "2020-21"], "2020-21"],
-       [8, "Which team eliminated Lazio in the Round of 16 during the 2020-21 UEFA Champions League?", ["Barcelona", "Bayern Munich", "Manchester City", "Real Madrid"], "Bayern Munich"],
-       [9, "Which Lazio manager guided the team back to the UEFA Champions League in the 2020-21 season?", ["Simone Inzaghi", "Maurizio Sarri", "Edoardo Reja", "Stefano Pioli"], "Simone Inzaghi"],
-       [10, "Which Lazio player scored a crucial goal against Borussia Dortmund in the 2020-21 UEFA Champions League group stage?", ["Sergej Milinković-Savić", "Ciro Immobile", "Luis Alberto", "Felipe Caicedo"], "Ciro Immobile"]
-   ],
-"Arsenal": [
-   [1, "In which season did Arsenal first reach the UEFA Champions League final?", ["2003-04", "2005-06", "2007-08", "2010-11"], "2005-06"],
-   [2, "Who scored the only goal for Arsenal in the 2006 UEFA Champions League final against Barcelona?", ["Robert Pirès", "Sol Campbell", "Thierry Henry", "Freddie Ljungberg"], "Sol Campbell"],
-   [3, "Which stadium did Arsenal move to in 2006, replacing Highbury?", ["Emirates Stadium", "Old Trafford", "Anfield", "Stamford Bridge"], "Emirates Stadium"],
-   [4, "Who is Arsenal's all-time top scorer?", ["Robin van Persie", "Thierry Henry", "Ian Wright", "Dennis Bergkamp"], "Thierry Henry"],
-   [5, "In which season did Arsenal go unbeaten in the Premier League?", ["2002-03", "2003-04", "2004-05", "2005-06"], "2003-04"],
-   [6, "Which manager led Arsenal during their unbeaten Premier League season?", ["Arsène Wenger", "George Graham", "Mikel Arteta", "Unai Emery"], "Arsène Wenger"],
-   [7, "Against which team did Arsenal secure their first-ever Premier League title?", ["Liverpool", "Manchester United", "Tottenham Hotspur", "Everton"], "Liverpool"],
-   [8, "Who was Arsenal's captain when they reached the 2006 UEFA Champions League final?", ["Patrick Vieira", "Cesc Fàbregas", "Thierry Henry", "Robert Pirès"], "Patrick Vieira"],
-   [9, "Which former Arsenal player went on to play for Barcelona and later return to the Premier League with Manchester City?", ["Cesc Fàbregas", "Robin van Persie", "Samir Nasri", "Alexis Sánchez"], "Cesc Fàbregas"],
-   [10, "In which year did Arsenal's 'Invincibles' team complete their unbeaten league season?", ["2003", "2004", "2005", "2006"], "2004"]
-],
-"Manchester City": [
-   [1, "In which year did Manchester City win their first UEFA Champions League title?", ["2010", "2012", "2016", "2023"], "2023"],
-   [2, "Who scored the winning goal for Manchester City in the 2023 UEFA Champions League final?", ["Erling Haaland", "Kevin De Bruyne", "Riyad Mahrez", "Rodri"], "Rodri"],
-   [3, "Which Manchester City player holds the record for most goals in a single Premier League season?", ["Sergio Agüero", "Raheem Sterling", "Kevin De Bruyne", "Erling Haaland"], "Erling Haaland"],
-   [4, "Which stadium is the home of Manchester City?", ["Old Trafford", "Anfield", "Etihad Stadium", "Stamford Bridge"], "Etihad Stadium"],
-   [5, "Who was Manchester City's manager when they won their first Premier League title?", ["Roberto Mancini", "Pep Guardiola", "Manuel Pellegrini", "Mark Hughes"], "Roberto Mancini"],
-   [6, "Which team did Manchester City defeat 6-3 in a famous 2022 Premier League match?", ["Arsenal", "Manchester United", "Tottenham Hotspur", "Chelsea"], "Manchester United"],
-   [7, "Who was Manchester City's captain during their 2023 UEFA Champions League win?", ["Sergio Agüero", "Vincent Kompany", "Kevin De Bruyne", "Fernandinho"], "Vincent Kompany"],
-   [8, "Which Manchester City player scored a hat-trick in the 2019-20 UEFA Champions League against Atalanta?", ["Sergio Agüero", "Gabriel Jesus", "Raheem Sterling", "Kevin De Bruyne"], "Raheem Sterling"],
-   [9, "Which famous Manchester City player is known for his iconic 'no-look' passes?", ["Kevin De Bruyne", "David Silva", "Yaya Touré", "Sergio Agüero"], "David Silva"],
-   [10, "Who was the first player to score for Manchester City in the 2023 UEFA Champions League final?", ["Kevin De Bruyne", "Rodri", "Ilkay Gündogan", "Erling Haaland"], "Rodri"]
-],
-"Manchester United": [
-   [1, "In which year did Manchester United win their first UEFA Champions League title?", ["1968", "1992", "1999", "2008"], "1968"],
-   [2, "Who scored the winning goal for Manchester United in the 1999 UEFA Champions League final?", ["David Beckham", "Ryan Giggs", "Teddy Sheringham", "Ole Gunnar Solskjær"], "Ole Gunnar Solskjær"],
-   [3, "Which stadium is the home of Manchester United?", ["Anfield", "Old Trafford", "Stamford Bridge", "Etihad Stadium"], "Old Trafford"],
-   [4, "Who is Manchester United's all-time top scorer?", ["Wayne Rooney", "Ryan Giggs", "Cristiano Ronaldo", "Eric Cantona"], "Wayne Rooney"],
-   [5, "Which manager led Manchester United to their first Premier League title?", ["Sir Alex Ferguson", "Louis van Gaal", "José Mourinho", "Ryan Giggs"], "Sir Alex Ferguson"],
-   [6, "In which year did Manchester United complete the famous 'treble'?", ["1997", "1999", "2003", "2008"], "1999"],
-   [7, "Which team did Manchester United defeat 4-0 in the 2019-20 UEFA Champions League round of 16?", ["Barcelona", "Paris Saint-Germain", "Real Madrid", "Roma"], "Barcelona"],
-   [8, "Which Manchester United legend is known for scoring a famous goal in the 1999 FA Cup final against Newcastle?", ["Ryan Giggs", "David Beckham", "Eric Cantona", "Paul Scholes"], "Ryan Giggs"],
-   [9, "Who did Manchester United defeat in the 2008 UEFA Champions League final?", ["Chelsea", "Barcelona", "Arsenal", "Bayern Munich"], "Chelsea"],
-   [10, "Who was Manchester United's captain during their 1999 UEFA Champions League win?", ["Roy Keane", "Eric Cantona", "Ryan Giggs", "Gary Neville"], "Roy Keane"]
-],
-"Newcastle United": [
-   [1, "In which season did Newcastle United first qualify for the UEFA Champions League group stage?", ["1994-95", "1997-98", "2000-01", "2002-03"], "1997-98"],
-   [2, "Which team did Newcastle United famously defeat 3-2 in the 2002-03 UEFA Champions League group stage?", ["Juventus", "Barcelona", "Real Madrid", "AC Milan"], "Juventus"],
-   [3, "Which stadium is the home of Newcastle United?", ["St. James' Park", "Old Trafford", "Emirates Stadium", "Anfield"], "St. James' Park"],
-   [4, "Who is Newcastle United's all-time top scorer?", ["Alan Shearer", "Pavel Srníček", "Nobby Solano", "Yohan Cabaye"], "Alan Shearer"],
-   [5, "Who was the manager when Newcastle United first qualified for the UEFA Champions League?", ["Kevin Keegan", "Bobby Robson", "Sam Allardyce", "Alan Pardew"], "Kevin Keegan"],
-   [6, "In which season did Newcastle United finish second in the Premier League?", ["1994-95", "1996-97", "2000-01", "2010-11"], "1996-97"],
-   [7, "Who scored a famous hat-trick for Newcastle United against Leicester City in the 1996-97 Premier League?", ["Alan Shearer", "Les Ferdinand", "David Ginola", "Rob Lee"], "Alan Shearer"],
-   [8, "Which team did Newcastle United defeat 5-0 in the 1996-97 Premier League?", ["Liverpool", "Manchester United", "Tottenham Hotspur", "Arsenal"], "Manchester United"],
-   [9, "Which player left Newcastle United for Real Madrid in 1999?", ["Laurent Robert", "David Ginola", "Michael Owen", "Yohan Cabaye"], "Laurent Robert"],
-   [10, "Which famous Newcastle player is known for scoring in the 1998-99 UEFA Champions League against Barcelona?", ["Alan Shearer", "Pavel Srníček", "Craig Bellamy", "Duncan Ferguson"], "Alan Shearer"]
-],
-"Atlético Madrid": [
-   [1, "In which season did Atlético Madrid first reach the UEFA Champions League final?", ["2007-08", "2010-11", "2012-13", "2013-14"], "2013-14"],
-   [2, "Who scored the winning goal for Atlético Madrid in the 2014 UEFA Champions League final?", ["Diego Costa", "David Villa", "Arda Turan", "Antoine Griezmann"], "Diego Godín"],
-   [3, "Which stadium is the home of Atlético Madrid?", ["Santiago Bernabéu", "Camp Nou", "Metropolitano Stadium", "Wanda Metropolitano"], "Wanda Metropolitano"],
-   [4, "Who is Atlético Madrid's all-time top scorer?", ["Fernando Torres", "Diego Costa", "Antoine Griezmann", "Luis Suárez"], "Antoine Griezmann"],
-   [5, "Which manager led Atlético Madrid to the 2014 UEFA Champions League final?", ["Diego Simeone", "Gregorio Manzano", "Javier Aguirre", "Luis Aragonés"], "Diego Simeone"],
-   [6, "In which year did Atlético Madrid win La Liga, ending Real Madrid and Barcelona's dominance?", ["2012", "2013", "2014", "2016"], "2014"],
-   [7, "Which team did Atlético Madrid famously beat 4-0 in the 2018 UEFA Europa League final?", ["Marseille", "Juventus", "Liverpool", "Real Madrid"], "Marseille"],
-   [8, "Who scored a hat-trick for Atlético Madrid in their famous 7-1 victory over FC Porto in the 2013-14 UEFA Champions League?", ["Diego Costa", "Antoine Griezmann", "Radamel Falcao", "David Villa"], "Radamel Falcao"],
-   [9, "Which Atlético Madrid player joined Chelsea in 2014 and later returned to Atlético?", ["Diego Costa", "David Villa", "Antoine Griezmann", "Koke"], "Diego Costa"],
-   [10, "Which team did Atlético Madrid face in the 2016 UEFA Champions League final?", ["Real Madrid", "Barcelona", "Juventus", "Bayern Munich"], "Real Madrid"]
-],
-"Barcelona": [
-   [1, "In which year did Barcelona win their first-ever UEFA Champions League title?", ["1992", "2003", "2006", "2009"], "1992"],
-   [2, "Who scored the winning goal for Barcelona in the 2009 UEFA Champions League final?", ["Lionel Messi", "Samuel Eto'o", "David Villa", "Andrés Iniesta"], "Samuel Eto'o"],
-   [3, "Which stadium is the home of Barcelona?", ["Santiago Bernabéu", "Wanda Metropolitano", "Camp Nou", "Anfield"], "Camp Nou"],
-   [4, "Who is Barcelona's all-time top scorer?", ["Ronaldinho", "Neymar", "Lionel Messi", "Xavi Hernández"], "Lionel Messi"],
-   [5, "Who was the manager when Barcelona won the 2009 UEFA Champions League?", ["Frank Rijkaard", "Luis Enrique", "Pep Guardiola", "Tito Vilanova"], "Pep Guardiola"],
-   [6, "In which year did Barcelona complete the famous 'sextuple' by winning six trophies in one year?", ["2007", "2009", "2011", "2015"], "2009"],
-   [7, "Which team did Barcelona defeat 2-0 in the 2006 UEFA Champions League final?", ["Arsenal", "Manchester United", "Chelsea", "Bayer Leverkusen"], "Arsenal"],
-   [8, "Which player is known for scoring the famous 'Hand of God' goal in the 1986 World Cup and played for Barcelona?", ["Jordi Cruyff", "Diego Maradona", "Ronald Koeman", "Luis Suárez"], "Diego Maradona"],
-   [9, "Who scored a hat-trick for Barcelona against Real Madrid in the 2010-11 El Clásico?", ["Lionel Messi", "David Villa", "Pedro", "Cesc Fàbregas"], "Lionel Messi"],
-   [10, "Who was Barcelona's captain during their 2011 UEFA Champions League win?", ["Carles Puyol", "Gerard Piqué", "Xavi Hernández", "Lionel Messi"], "Carles Puyol"]
-],
-"Real Madrid": [
-   [1, "How many times has Real Madrid won the UEFA Champions League?", ["10", "12", "13", "14"], "14"],
-   [2, "In which year did Real Madrid win their first European Cup?", ["1955", "1956", "1960", "1962"], "1956"],
-   [3, "Who scored the winning goal for Real Madrid in the 2014 UEFA Champions League final?", ["Cristiano Ronaldo", "Karim Benzema", "Gareth Bale", "Sergio Ramos"], "Sergio Ramos"],
-   [4, "Which stadium is the home of Real Madrid?", ["Camp Nou", "Santiago Bernabéu", "Metropolitano", "San Siro"], "Santiago Bernabéu"],
-   [5, "Who is Real Madrid's all-time top scorer?", ["Raúl", "Cristiano Ronaldo", "Karim Benzema", "Alfredo Di Stéfano"], "Cristiano Ronaldo"],
-   [6, "Who was the manager when Real Madrid won the 2016 UEFA Champions League?", ["Zinedine Zidane", "José Mourinho", "Carlo Ancelotti", "Julen Lopetegui"], "Zinedine Zidane"],
-   [7, "Which team did Real Madrid defeat 4-1 in the 2014 UEFA Champions League final?", ["Atletico Madrid", "Juventus", "Bayern Munich", "Barcelona"], "Atletico Madrid"],
-   [8, "Who was the captain of Real Madrid during their 2002 UEFA Champions League win?", ["Iker Casillas", "Sergio Ramos", "Raúl", "Cristiano Ronaldo"], "Raúl"],
-   [9, "Which famous Real Madrid player is known as 'The King' of the club?", ["Cristiano Ronaldo", "Alfredo Di Stéfano", "Zinedine Zidane", "Raúl"], "Alfredo Di Stéfano"],
-   [10, "Which team did Real Madrid famously defeat 3-1 in the 2018 UEFA Champions League final?", ["Liverpool", "Juventus", "Bayern Munich", "Atlético Madrid"], "Liverpool"]
-],
-"Real Sociedad": [
-   [1, "In which season did Real Sociedad last qualify for the UEFA Champions League group stage?", ["2003-04", "2013-14", "2020-21", "1996-97"], "2020-21"],
-   [2, "Who is Real Sociedad's all-time top scorer?", ["David Silva", "Carlos Vela", "Aritz Elustondo", "Imanol Agirretxe"], "Carlos Vela"],
-   [3, "Which stadium is the home of Real Sociedad?", ["Camp Nou", "Santiago Bernabéu", "Anoeta Stadium", "San Mames"], "Anoeta Stadium"],
-   [4, "In which year did Real Sociedad finish second in La Liga, their best-ever league position?", ["1980", "1982", "1991", "2003"], "1982"],
-   [5, "Which Real Sociedad player went on to play for Manchester City in 2020?", ["David Silva", "Carlos Vela", "Imanol Agirretxe", "Antoine Griezmann"], "David Silva"],
-   [6, "Who was Real Sociedad's manager when they qualified for the 2020-21 UEFA Champions League?", ["Jagoba Arrasate", "Imanol Alguacil", "David Moyes", "Markel Bergara"], "Imanol Alguacil"],
-   [7, "Which team did Real Sociedad famously beat 4-0 in the 2020-21 Copa del Rey final?", ["Athletic Bilbao", "Real Madrid", "Barcelona", "Valencia"], "Athletic Bilbao"],
-   [8, "In which year did Real Sociedad win their first-ever Copa del Rey?", ["1923", "1948", "1987", "2019"], "1987"],
-   [9, "Who was the last manager to take Real Sociedad into the UEFA Champions League?", ["Imanol Alguacil", "David Moyes", "Jagoba Arrasate", "Eusebio Sacristán"], "Imanol Alguacil"],
-   [10, "Which country does Real Sociedad's famous forward, Carlos Vela, represent internationally?", ["Spain", "Mexico", "Argentina", "Chile"], "Mexico"]
-],
-"Sevilla": [
-   [1, "How many times has Sevilla won the UEFA Europa League?", ["5", "6", "7", "4"], "6"],
-   [2, "Who scored the winning goal for Sevilla in the 2006 UEFA Europa League final?", ["Frederic Kanouté", "Carlos Bacca", "José Antonio Reyes", "Ivan Rakitić"], "Frederic Kanouté"],
-   [3, "Which stadium is the home of Sevilla?", ["Santiago Bernabéu", "Camp Nou", "Ramón Sánchez Pizjuán", "Metropolitano"], "Ramón Sánchez Pizjuán"],
-   [4, "Who is Sevilla's all-time top scorer?", ["Luis Fabiano", "Carlos Bacca", "Antonio Puerta", "Fredi Kanouté"], "Fredi Kanouté"],
-   [5, "Who was the manager when Sevilla won their first UEFA Europa League?", ["Juande Ramos", "Unai Emery", "Luis Fabiano", "Carlos Bacca"], "Juande Ramos"],
-   [6, "In which year did Sevilla win their first UEFA Super Cup?", ["2005", "2006", "2007", "2014"], "2006"],
-   [7, "Which team did Sevilla defeat 3-2 in the 2014 UEFA Europa League final?", ["Benfica", "Dynamo Kyiv", "Valencia", "Juventus"], "Benfica"],
-   [8, "Which legendary Sevilla player tragically passed away in 2007?", ["Antonio Puerta", "Carlos Bacca", "José Antonio Reyes", "Luis Fabiano"], "Antonio Puerta"],
-   [9, "Which team did Sevilla beat 4-0 in the 2020 UEFA Europa League final?", ["Inter Milan", "Roma", "Manchester United", "Wolves"], "Inter Milan"],
-   [10, "In which season did Sevilla last reach the UEFA Champions League Round of 16?", ["2019-20", "2020-21", "2018-19", "2022-23"], "2020-21"]
-],
-"Inter Milan": [
-   [1, "How many times has Inter Milan won the UEFA Champions League?", ["3", "2", "4", "5"], "3"],
-   [2, "Who scored the winning goal for Inter Milan in the 2010 UEFA Champions League final?", ["Diego Milito", "Samuel Eto'o", "Wesley Sneijder", "Goran Pandev"], "Diego Milito"],
-   [3, "Which stadium is the home of Inter Milan?", ["San Siro", "Stadio Olimpico", "Juventus Stadium", "Parc des Princes"], "San Siro"],
-   [4, "Who is Inter Milan's all-time top scorer?", ["Mauro Icardi", "Giuseppe Meazza", "Ronaldo Nazário", "Marco Van Basten"], "Giuseppe Meazza"],
-   [5, "Who was the manager when Inter Milan won the 2010 UEFA Champions League?", ["José Mourinho", "Antonio Conte", "Luciano Spalletti", "Roberto Mancini"], "José Mourinho"],
-   [6, "Which team did Inter Milan defeat 2-0 in the 1964 UEFA Champions League final?", ["Real Madrid", "Juventus", "Benfica", "AC Milan"], "Benfica"],
-   [7, "Who was Inter Milan’s star player in the 2009-10 season, contributing significantly to their treble-winning year?", ["Wesley Sneijder", "Diego Milito", "Samuel Eto'o", "Goran Pandev"], "Diego Milito"],
-   [8, "Which former Inter Milan player is known for being one of the best strikers of his generation and won two World Cups?", ["Ronaldo Nazário", "Zlatan Ibrahimović", "Diego Milito", "Mauro Icardi"], "Ronaldo Nazário"],
-   [9, "Who did Inter Milan defeat 3-1 in the 2021 Coppa Italia final?", ["Juventus", "AC Milan", "Napoli", "Roma"], "Juventus"],
-   [10, "Which year did Inter Milan last win Serie A before their 2020-21 victory?", ["2009", "2010", "2011", "2007"], "2007"]
-],
-"AC Milan": [
-   [1, "How many times has AC Milan won the UEFA Champions League?", ["7", "5", "9", "4"], "7"],
-   [2, "Who scored the winning goal for AC Milan in the 2003 UEFA Champions League final?", ["Andriy Shevchenko", "Filippo Inzaghi", "Kaka", "Paolo Maldini"], "Filippo Inzaghi"],
-   [3, "Which stadium is the home of AC Milan?", ["San Siro", "Stadio Olimpico", "Allianz Stadium", "Parc des Princes"], "San Siro"],
-   [4, "Who is AC Milan’s all-time top scorer?", ["Alessandro Del Piero", "Paolo Maldini", "Filippo Inzaghi", "Kaka"], "Filippo Inzaghi"],
-   [5, "Who was AC Milan's manager during their 2003 UEFA Champions League victory?", ["Carlo Ancelotti", "Giovanni Trapattoni", "Arrigo Sacchi", "Alberto Zaccheroni"], "Carlo Ancelotti"],
-   [6, "In which year did AC Milan last win the Serie A title?", ["2004", "2011", "2009", "2010"], "2011"],
-   [7, "Which famous Brazilian player won the 2007 Ballon d'Or while playing for AC Milan?", ["Ronaldinho", "Ricardo Kaká", "Roberto Carlos", "Rivaldo"], "Ricardo Kaká"],
-   [8, "Which team did AC Milan beat 2-0 in the 2007 UEFA Champions League final?", ["Liverpool", "Juventus", "Manchester United", "Barcelona"], "Liverpool"],
-   [9, "Which player scored a famous last-minute header for AC Milan in the 2005 Champions League final?", ["Paolo Maldini", "Filippo Inzaghi", "Andriy Shevchenko", "Alessandro Nesta"], "Filippo Inzaghi"],
-   [10, "Which AC Milan legend is known as ‘Il Capitano’?", ["Filippo Inzaghi", "Alessandro Nesta", "Paolo Maldini", "Kaka"], "Paolo Maldini"]
-],
-"Napoli": [
-   [1, "In which year did Napoli win their first Serie A title?", ["1986", "1987", "1990", "1991"], "1987"],
-   [2, "Who was the manager when Napoli won their 1987 Serie A title?", ["Diego Maradona", "Carlo Ancelotti", "Luigi De Canio", "Eugenio Corini"], "Diego Maradona"],
-   [3, "Which stadium is the home of Napoli?", ["San Paolo", "Stadio Olimpico", "Juventus Stadium", "San Siro"], "Stadio Diego Armando Maradona"],
-   [4, "Who is Napoli's all-time top scorer?", ["Diego Maradona", "Lorenzo Insigne", "Marek Hamšík", "Ezequiel Lavezzi"], "Marek Hamšík"],
-   [5, "Which team did Napoli defeat to win their first Coppa Italia in 1962?", ["Fiorentina", "Juventus", "Roma", "Atalanta"], "Fiorentina"],
-   [6, "Who was Napoli’s manager during their 2014 Coppa Italia victory?", ["Rafael Benítez", "Maurizio Sarri", "Carlo Ancelotti", "Luigi De Canio"], "Rafael Benítez"],
-   [7, "In which year did Napoli last win the Serie A title?", ["1989", "1990", "2023", "2021"], "2023"],
-   [8, "Who was Napoli’s key player during their 1989 UEFA Cup victory?", ["Diego Maradona", "Antonio Di Natale", "Fabio Cannavaro", "Lorenzo Insigne"], "Diego Maradona"],
-   [9, "Which famous Napoli player went on to play for Paris Saint-Germain?", ["Edinson Cavani", "Ezequiel Lavezzi", "Gonzalo Higuaín", "José Callejón"], "Ezequiel Lavezzi"],
-   [10, "In which season did Napoli finish second in Serie A, their best-ever position since 1990?", ["2013-14", "2015-16", "2017-18", "2022-23"], "2022-23"]
-],
-"Juventus": [
-   [1, "In which year did Juventus win their first UEFA Champions League title?", ["1985", "1993", "1996", "2003"], "1985"],
-   [2, "Which team did Juventus defeat in the 1996 UEFA Champions League final?", ["Ajax", "Real Madrid", "Borussia Dortmund", "AC Milan"], "Ajax"],
-   [3, "How many UEFA Champions League titles has Juventus won?", ["1", "2", "3", "4"], "2"],
-   [4, "Which Juventus player scored in the 2015 UEFA Champions League final?", ["Paul Pogba", "Alvaro Morata", "Carlos Tévez", "Andrea Pirlo"], "Alvaro Morata"],
-   [5, "Which team eliminated Juventus in the 2017 UEFA Champions League final?", ["Barcelona", "Real Madrid", "Bayern Munich", "Liverpool"], "Real Madrid"],
-   [6, "Which Juventus player scored a hat-trick against Real Madrid in the 2018 UEFA Champions League quarter-finals?", ["Cristiano Ronaldo", "Gonzalo Higuaín", "Mario Mandzukic", "Paulo Dybala"], "Cristiano Ronaldo"],
-   [7, "What was the result of the 1997 UEFA Champions League final between Juventus and Borussia Dortmund?", ["1-0", "2-1", "3-1", "3-0"], "3-1"],
-   [8, "Which stadium hosted the 2017 UEFA Champions League final, where Juventus played?", ["San Siro", "Wembley", "Millennium Stadium", "Cardiff City Stadium"], "Millennium Stadium"],
-   [9, "In which year did Juventus last reach the final of the UEFA Champions League as of 2023?", ["2015", "2017", "2019", "2020"], "2017"],
-   [10, "Who was the manager of Juventus when they won the 1996 UEFA Champions League?", ["Marcello Lippi", "Antonio Conte", "Allegri", "Claudio Ranieri"], "Marcello Lippi"]
-],
-"RB Leipzig": [
-   [1, "In which year did RB Leipzig make their debut in the UEFA Champions League group stage?", ["2017", "2018", "2019", "2020"], "2017"],
-   [2, "Which team did RB Leipzig famously defeat in the 2020 UEFA Champions League quarter-finals?", ["Atletico Madrid", "Paris Saint-Germain", "Tottenham Hotspur", "Bayern Munich"], "Atletico Madrid"],
-   [3, "Who was the manager of RB Leipzig when they reached the 2020 UEFA Champions League semi-finals?", ["Julian Nagelsmann", "Ralph Hasenhüttl", "Jesse Marsch", "Marco Rose"], "Julian Nagelsmann"],
-   [4, "Which RB Leipzig player scored a hat-trick in the 2020 UEFA Champions League quarter-finals?", ["Timo Werner", "Christopher Nkunku", "Marcel Sabitzer", "Angelino"], "Timo Werner"],
-   [5, "Which club did RB Leipzig face in their first-ever UEFA Champions League knockout round?", ["Paris Saint-Germain", "Tottenham Hotspur", "Real Madrid", "Shakhtar Donetsk"], "Tottenham Hotspur"],
-   [6, "Which stadium hosted the 2020 UEFA Champions League semi-final between RB Leipzig and Paris Saint-Germain?", ["Allianz Arena", "Parc des Princes", "Stamford Bridge", "Estádio da Luz"], "Estádio da Luz"],
-   [7, "Which RB Leipzig player scored the club's first-ever UEFA Champions League goal?", ["Timo Werner", "Yussuf Poulsen", "Marcel Sabitzer", "Christopher Nkunku"], "Yussuf Poulsen"],
-   [8, "How far did RB Leipzig reach in their first-ever UEFA Champions League campaign?", ["Group Stage", "Round of 16", "Quarter-Finals", "Semi-Finals"], "Semi-Finals"],
-   [9, "Which team eliminated RB Leipzig in the 2021 UEFA Champions League Round of 16?", ["Liverpool", "Paris Saint-Germain", "Manchester City", "Real Madrid"], "Liverpool"],
-   [10, "Who was RB Leipzig's top scorer in the 2020-21 UEFA Champions League season?", ["Christopher Nkunku", "Yussuf Poulsen", "Marcel Sabitzer", "Angelino"], "Christopher Nkunku"]
-],
-"Paris Saint-Germain": [
-   [1, "In which year did Paris Saint-Germain reach their first-ever UEFA Champions League final?", ["2018", "2019", "2020", "2021"], "2020"],
-   [2, "Which team did Paris Saint-Germain face in the 2020 UEFA Champions League final?", ["Bayern Munich", "Liverpool", "Real Madrid", "Juventus"], "Bayern Munich"],
-   [3, "Who scored Paris Saint-Germain's winning goal in their 2016-17 UEFA Champions League Round of 16 tie against Barcelona?", ["Edinson Cavani", "Neymar", "Kylian Mbappé", "Angel Di María"], "Edinson Cavani"],
-   [4, "Who was the manager of Paris Saint-Germain during their 2020 UEFA Champions League campaign?", ["Unai Emery", "Thomas Tuchel", "Mauricio Pochettino", "Laurent Blanc"], "Thomas Tuchel"],
-   [5, "Which stadium hosted the 2020 UEFA Champions League final between Paris Saint-Germain and Bayern Munich?", ["Parc des Princes", "Stade de France", "Allianz Arena", "Estádio da Luz"], "Estádio da Luz"],
-   [6, "Who scored Paris Saint-Germain's first-ever goal in the UEFA Champions League group stage?", ["Neymar", "Edinson Cavani", "Kylian Mbappé", "Zlatan Ibrahimović"], "Zlatan Ibrahimović"],
-   [7, "In which season did Paris Saint-Germain make their first-ever appearance in the UEFA Champions League final?", ["2013-14", "2015-16", "2017-18", "2019-20"], "2019-20"],
-   [8, "Which team eliminated Paris Saint-Germain in the 2019 UEFA Champions League Round of 16?", ["Barcelona", "Real Madrid", "Manchester United", "Bayern Munich"], "Manchester United"],
-   [9, "Who scored the most goals for Paris Saint-Germain in the 2020 UEFA Champions League campaign?", ["Kylian Mbappé", "Neymar", "Edinson Cavani", "Mauro Icardi"], "Neymar"],
-   [10, "Which Paris Saint-Germain player famously scored a stunning bicycle kick against Club Brugge in the 2019-20 UEFA Champions League?", ["Kylian Mbappé", "Angel Di María", "Neymar", "Mauro Icardi"], "Neymar"]
-],
-"Benfica": [
-   [1, "In which year did Benfica win their first-ever UEFA Champions League title?", ["1961", "1962", "1963", "1965"], "1961"],
-   [2, "Which team did Benfica defeat in the 1962 UEFA Champions League final?", ["Real Madrid", "Barcelona", "Juventus", "Barcelona"], "Real Madrid"],
-   [3, "Who was Benfica's manager during their 1962 UEFA Champions League victory?", ["Béla Guttmann", "Jorge Jesus", "Rui Vitória", "Ernesto Valverde"], "Béla Guttmann"],
-   [4, "Who scored the winning goal for Benfica in the 1962 UEFA Champions League final?", ["Eusébio", "José Águas", "Mário Coluna", "Alfredo Di Stéfano"], "José Águas"],
-   [5, "In which season did Benfica last reach the UEFA Champions League final?", ["2004-05", "2013-14", "2015-16", "2017-18"], "2013-14"],
-   [6, "Which team eliminated Benfica in the 2013-14 UEFA Champions League semi-finals?", ["Chelsea", "Real Madrid", "Bayern Munich", "Juventus"], "Chelsea"],
-   [7, "Which stadium is home to Benfica?", ["Estádio da Luz", "Parc des Princes", "Stadio Olimpico", "Allianz Arena"], "Estádio da Luz"],
-   [8, "Which Benfica player scored a memorable goal against Barcelona in the 2012-13 UEFA Champions League?", ["Oscar Cardozo", "Salvio", "Jorge Jesus", "Eduardo Salvio"], "Eduardo Salvio"],
-   [9, "Which legendary Portuguese player played for Benfica and became one of their most iconic figures?", ["Eusébio", "Luis Figo", "Cristiano Ronaldo", "Ricardo Quaresma"], "Eusébio"],
-   [10, "In the 2019-20 UEFA Champions League, which group was Benfica placed in?", ["Group G", "Group B", "Group C", "Group A"], "Group G"]
-],
-"Braga": [
-   [1, "In which season did Braga make their first-ever appearance in the UEFA Champions League group stage?", ["2009-10", "2011-12", "2007-08", "2013-14"], "2011-12"],
-   [2, "Which team did Braga face in the 2011-12 UEFA Champions League group stage?", ["Arsenal", "Barcelona", "Manchester City", "Real Madrid"], "Arsenal"],
-   [3, "Which player scored Braga's first-ever goal in the UEFA Champions League?", ["Alan", "Mossoro", "Hugo Viana", "Eder"], "Alan"],
-   [4, "In which season did Braga reach the UEFA Europa League final?", ["2010-11", "2012-13", "2009-10", "2014-15"], "2010-11"],
-   [5, "Which club did Braga face in the 2010-11 UEFA Europa League final?", ["Porto", "Chelsea", "Bayer Leverkusen", "Manchester City"], "Porto"],
-   [6, "Who was the manager of Braga during their 2010-11 UEFA Europa League final campaign?", ["Domingos Paciência", "José Peseiro", "Paulo Fonseca", "Jorge Jesus"], "Domingos Paciência"],
-   [7, "Which team eliminated Braga in the 2019-20 UEFA Europa League Round of 32?", ["Rangers", "Fiorentina", "Roma", "Arsenal"], "Rangers"],
-   [8, "What is the name of Braga's home stadium?", ["Estádio Municipal de Braga", "Estádio da Luz", "Estádio do Dragão", "Estádio José Alvalade"], "Estádio Municipal de Braga"],
-   [9, "Who was the top scorer for Braga in the 2011-12 UEFA Champions League group stage?", ["Eder", "Alan", "Mossoro", "Luisão"], "Alan"],
-   [10, "In which season did Braga finish as runners-up in the Primeira Liga for the first time?", ["2009-10", "2010-11", "2012-13", "2014-15"], "2009-10"]
-],
-"Feyenoord": [
-   [1, "In which season did Feyenoord make their first-ever appearance in the UEFA Champions League group stage?", ["1997-98", "1999-2000", "2002-03", "2014-15"], "1999-2000"],
-   [2, "Which team did Feyenoord famously defeat in the 2002 UEFA Cup final?", ["Borussia Dortmund", "Manchester United", "Liverpool", "Bayern Munich"], "Borussia Dortmund"],
-   [3, "Who scored the winning goal for Feyenoord in the 2002 UEFA Cup final?", ["Jon Dahl Tomasson", "Pierre van Hooijdonk", "Ruud Gullit", "Wim Jonk"], "Jon Dahl Tomasson"],
-   [4, "Which player is Feyenoord's all-time top scorer?", ["Robin van Persie", "Dirk Kuyt", "Jean-Paul Boëtius", "Pierre van Hooijdonk"], "Pierre van Hooijdonk"],
-   [5, "Which stadium is the home of Feyenoord?", ["De Kuip", "Amsterdam Arena", "Philips Stadion", "Gelredome"], "De Kuip"],
-   [6, "Who was the manager of Feyenoord when they won the Eredivisie in 2017?", ["Giovanni van Bronckhorst", "Fred Rutten", "Ronald Koeman", "Dick Advocaat"], "Giovanni van Bronckhorst"],
-   [7, "Which club did Feyenoord face in the 2017 Eredivisie title-deciding match?", ["Ajax", "PSV Eindhoven", "AZ Alkmaar", "Vitesse"], "Ajax"],
-   [8, "Which Feyenoord player scored a hat-trick in the 2017-18 UEFA Europa League group stage?", ["Jørgen Strand Larsen", "Robin van Persie", "Steven Berghuis", "Tonny Vilhena"], "Robin van Persie"],
-   [9, "In which year did Feyenoord win their first European Cup/Champions League title?", ["1969", "1970", "1980", "1999"], "1970"],
-   [10, "Who was the manager of Feyenoord during their first European Cup triumph in 1970?", ["Rinus Michels", "Johan Cruyff", "Ferry de Haan", "Georg Kessler"], "Rinus Michels"]
-],
-"PSV Eindhoven": [
-   [1, "In which season did PSV Eindhoven win their first-ever UEFA Champions League title?", ["1988", "1992", "1995", "2000"], "1988"],
-   [2, "Which team did PSV Eindhoven defeat in the 1988 European Cup final?", ["Sampdoria", "Real Madrid", "AC Milan", "Bayern Munich"], "Sampdoria"],
-   [3, "Who scored the winning penalty for PSV Eindhoven in the 1988 European Cup final?", ["Ruud Gullit", "Marco van Basten", "André Ooijer", "Johnny Metgod"], "Johnny Metgod"],
-   [4, "Which PSV Eindhoven player is the club's all-time top scorer?", ["Ruud van Nistelrooy", "Arjen Robben", "Ruud Gullit", "Ruud Krol"], "Ruud van Nistelrooy"],
-   [5, "Which stadium is the home of PSV Eindhoven?", ["De Kuip", "Philips Stadion", "Amsterdam Arena", "Gelredome"], "Philips Stadion"],
-   [6, "Who was the manager of PSV Eindhoven when they won the Eredivisie title in 2018-19?", ["Mark van Bommel", "Dick Advocaat", "Guus Hiddink", "Ronald Koeman"], "Mark van Bommel"],
-   [7, "Which PSV Eindhoven player scored a memorable goal against S.L. Benfica in the 2005-06 UEFA Champions League?", ["Arjen Robben", "Ruud van Nistelrooy", "Ruud Gullit", "Jan Vennegoor of Hesselink"], "Arjen Robben"],
-   [8, "In which season did PSV Eindhoven last reach the semi-finals of the UEFA Champions League?", ["2004-05", "2005-06", "2006-07", "2007-08"], "2004-05"],
-   [9, "Who is PSV Eindhoven's most famous player from the 1988 European Cup-winning squad?", ["Marco van Basten", "Ruud Gullit", "Arjen Robben", "Ronaldo Nazário"], "Ruud Gullit"],
-   [10, "Which team did PSV Eindhoven defeat in the 1988 European Cup final after a penalty shootout?", ["Sampdoria", "AC Milan", "Real Madrid", "Bayern Munich"], "Sampdoria"]
-],
-"Red Bull Salzburg": [
-   [1, "In which year did Red Bull Salzburg win their first Austrian Bundesliga title?", ["2004", "2007", "2011", "2015"], "2007"],
-   [2, "Which stadium is the home of Red Bull Salzburg?", ["Ernst Happel Stadion", "Red Bull Arena", "Waldstadion", "Stadion an der Alten Försterei"], "Red Bull Arena"],
-   [3, "Who is Red Bull Salzburg's all-time top scorer in UEFA Champions League history?", ["Valon Berisha", "Jonatan Soriano", "Munas Dabbur", "Hwang Hee-chan"], "Munas Dabbur"],
-   [4, "In which season did Red Bull Salzburg first appear in the UEFA Champions League group stage?", ["2011-12", "2012-13", "2014-15", "2017-18"], "2017-18"],
-   [5, "Which club did Red Bull Salzburg famously defeat to reach the 2018-19 UEFA Europa League semi-finals?", ["Bayer Leverkusen", "Napoli", "Borussia Dortmund", "Real Madrid"], "Borussia Dortmund"],
-   [6, "Who was the manager of Red Bull Salzburg when they won the 2014-15 Austrian Bundesliga?", ["Adolf Hütter", "Marco Rose", "Jesse Marsch", "Matthias Jaissle"], "Adolf Hütter"],
-   [7, "Which famous player played for Red Bull Salzburg before joining RB Leipzig?", ["Timo Werner", "Naby Keita", "Dominik Szoboszlai", "Emil Forsberg"], "Naby Keita"],
-   [8, "Which team did Red Bull Salzburg face in the 2020-21 UEFA Champions League group stage?", ["Bayern Munich", "Liverpool", "Juventus", "Paris Saint-Germain"], "Bayern Munich"],
-   [9, "Which former Red Bull Salzburg player went on to join FC Barcelona in 2019?", ["Dominik Szoboszlai", "Takumi Minamino", "Mohamed Salah", "Konrad Laimer"], "Dominik Szoboszlai"],
-   [10, "Red Bull Salzburg's largest win in a UEFA competition came against which team?", ["Maccabi Haifa", "LASK Linz", "Bohemians", "Dynamo Kyiv"], "Maccabi Haifa"]
-],
-"Celtic": [
-   [1, "In which year did Celtic win their first European Cup title?", ["1965", "1967", "1972", "1980"], "1967"],
-   [2, "Which stadium is the home of Celtic?", ["Ibrox Stadium", "Celtic Park", "Hampden Park", "Murrayfield"], "Celtic Park"],
-   [3, "Who is Celtic's all-time top scorer in UEFA competitions?", ["Henrik Larsson", "Jimmy Johnstone", "Kenny Dalglish", "Scott Sinclair"], "Henrik Larsson"],
-   [4, "Which club did Celtic defeat in the 1967 European Cup final?", ["Inter Milan", "Real Madrid", "Benfica", "AC Milan"], "Inter Milan"],
-   [5, "Who was the manager of Celtic during their 2003 UEFA Cup final run?", ["Martin O'Neill", "Brendan Rodgers", "Neil Lennon", "Gordon Strachan"], "Martin O'Neill"],
-   [6, "Which team did Celtic famously beat 2-1 in the 2003 UEFA Champions League group stage?", ["Manchester United", "Juventus", "Real Madrid", "AC Milan"], "Juventus"],
-   [7, "In which year did Celtic win their most recent Scottish Premiership title?", ["2018", "2019", "2020", "2021"], "2021"],
-   [8, "Which famous Celtic player played for Barcelona between 2010 and 2013?", ["Scott Brown", "Kieran Tierney", "Victor Wanyama", "Gary Hooper"], "Victor Wanyama"],
-   [9, "Who scored Celtic's winning goal in the 2019 Scottish Cup final?", ["Odsonne Édouard", "Ryan Christie", "Tom Rogic", "James Forrest"], "Odsonne Édouard"],
-   [10, "Which famous player is known for his legendary 'Lennon Header' during the 2003 UEFA Cup run?", ["Neil Lennon", "John Hartson", "Henrik Larsson", "Chris Sutton"], "Neil Lennon"]
-],
-"Shakhtar Donetsk": [
-   [1, "In which year did Shakhtar Donetsk win their first UEFA Cup (now Europa League) title?", ["2007", "2009", "2011", "2013"], "2009"],
-   [2, "Which stadium is the home of Shakhtar Donetsk?", ["Metalist Stadium", "Lviv Arena", "Donbass Arena", "Olympic Stadium"], "Donbass Arena"],
-   [3, "Who was Shakhtar Donetsk's manager when they won the 2009 UEFA Cup?", ["Mircea Lucescu", "Luiz Felipe Scolari", "Roberto De Zerbi", "Paulo Fonseca"], "Mircea Lucescu"],
-   [4, "Which famous Brazilian player is known for playing a key role in Shakhtar Donetsk's attack?", ["Alex Teixeira", "Willian", "Douglas Costa", "Jadson"], "Willian"],
-   [5, "Which team did Shakhtar Donetsk defeat in the 2009 UEFA Cup final?", ["Werder Bremen", "FC Porto", "Braga", "Fulham"], "Werder Bremen"],
-   [6, "How many times has Shakhtar Donetsk won the Ukrainian Premier League as of 2023?", ["10", "12", "14", "16"], "14"],
-   [7, "In which season did Shakhtar Donetsk first qualify for the UEFA Champions League group stage?", ["2000-01", "2001-02", "2004-05", "2008-09"], "2004-05"],
-   [8, "Who is Shakhtar Donetsk's all-time top scorer in European competitions?", ["Alex Teixeira", "Henrikh Mkhitaryan", "Luis Adriano", "Jadson"], "Luis Adriano"],
-   [9, "Which country is Shakhtar Donetsk's all-time top scorer, Luiz Adriano, originally from?", ["Brazil", "Ukraine", "Argentina", "Portugal"], "Brazil"],
-   [10, "Which player scored a hat-trick for Shakhtar Donetsk against Roma in the 2020-21 UEFA Champions League?", ["Junior Moraes", "Alan Patrick", "Taison", "Manor Solomon"], "Junior Moraes"]
-],
-"Antwerp": [
-   [1, "In which year did Antwerp last win the Belgian Pro League?", ["1995", "1999", "2000", "2003"], "2000"],
-   [2, "Which stadium is the home of Antwerp?", ["Constant Vanden Stock Stadium", "Bosuilstadion", "Jan Breydel Stadium", "Ghelamco Arena"], "Bosuilstadion"],
-   [3, "Which Belgian club did Antwerp famously defeat in the 1993-94 UEFA Cup?", ["Club Brugge", "Anderlecht", "Gent", "Genk"], "Anderlecht"],
-   [4, "In which season did Antwerp return to the UEFA Champions League group stage for the first time since 1994?", ["2017-18", "2019-20", "2020-21", "2022-23"], "2020-21"],
-   [5, "Which Antwerp player scored the winning goal in the 1993-94 UEFA Cup final against the German club?", ["Marc Degryse", "Erik Meijer", "Johan Boskamp", "Yves Vanderhaeghe"], "Marc Degryse"],
-   [6, "Which famous manager led Antwerp to win the Belgian Cup in 1992?", ["Frank Vercauteren", "Herman Helleputte", "Walter Meeuws", "László Bölöni"], "László Bölöni"],
-   [7, "Which country is Antwerp's famous striker, Radja Nainggolan, originally from?", ["Belgium", "Italy", "Indonesia", "Algeria"], "Belgium"],
-   [8, "What is Antwerp's nickname?", ["The Great Old", "The Red Devils", "The Pride of Belgium", "The Mighty Reds"], "The Great Old"],
-   [9, "In which year did Antwerp win their first Belgian Cup?", ["1940", "1950", "1960", "1992"], "1950"],
-   [10, "Which team eliminated Antwerp in the 2020-21 UEFA Champions League qualification?", ["AZ Alkmaar", "Celtic", "Dynamo Kyiv", "Olympiacos"], "Olympiacos"]
-],
-"Young Boys": [
-   [1, "In which year did Young Boys win their first Swiss Super League title?", ["1950", "1960", "1986", "2005"], "1958"],
-   [2, "Which stadium is the home of Young Boys?", ["Kybunpark", "Letzigrund", "Wankdorf Stadium", "Stade de Suisse"], "Wankdorf Stadium"],
-   [3, "Which Swiss club has Young Boys' biggest domestic rivalry with?", ["Basel", "Zurich", "Lausanne", "St. Gallen"], "Basel"],
-   [4, "How many times has Young Boys won the Swiss Super League title as of 2023?", ["10", "12", "15", "16"], "15"],
-   [5, "Which famous striker played for Young Boys before moving to Borussia Dortmund?", ["Alexandre Jankewitz", "Kevin Mbabu", "Cédric Itten", "Meschack Elia"], "Cédric Itten"],
-   [6, "In which season did Young Boys first qualify for the UEFA Champions League group stage?", ["2008-09", "2017-18", "2020-21", "2021-22"], "2018-19"],
-   [7, "Which team did Young Boys famously defeat 2-1 in the 2021-22 UEFA Champions League group stage?", ["Manchester United", "Juventus", "Bayern Munich", "Lazio"], "Manchester United"],
-   [8, "Which country is Young Boys' star player, Jean-Pierre Nsame, originally from?", ["Cameroon", "Switzerland", "France", "Ivory Coast"], "Cameroon"],
-   [9, "Which Swiss manager guided Young Boys to their 2018-19 league title?", ["Gerardo Seoane", "Christian Gross", "Urs Fischer", "Adrián Ursea"], "Gerardo Seoane"],
-   [10, "Who is Young Boys' all-time top scorer in European competitions?", ["Jean-Pierre Nsame", "Michel Aebischer", "Roger Wehrli", "Giuseppe Murolo"], "Jean-Pierre Nsame"]
-],
-"Galatasaray": [
-   [1, "In which year did Galatasaray win their first UEFA Cup?", ["1999", "2000", "2002", "2005"], "2000"],
-   [2, "Which stadium is the home of Galatasaray?", ["Ali Sami Yen Stadium", "Türk Telekom Stadium", "Fenerbahçe Şükrü Saracoğlu Stadium", "Beşiktaş Park"], "Türk Telekom Stadium"],
-   [3, "Which Turkish club is Galatasaray's biggest domestic rival?", ["Fenerbahçe", "Beşiktaş", "Trabzonspor", "Bursaspor"], "Fenerbahçe"],
-   [4, "Who was the manager when Galatasaray won the 2000 UEFA Cup and Super Cup?", ["Fatih Terim", "Mustafa Denizli", "Mircea Lucescu", "Gheorghe Hagi"], "Fatih Terim"],
-   [5, "Which Galatasaray player scored the decisive penalty in the 2000 UEFA Cup final against Arsenal?", ["Hakan Şükür", "Bülent Korkmaz", "Galip Çetin", "Umit Davala"], "Hakan Şükür"],
-   [6, "Which country is Galatasaray's star player, Arda Turan, originally from?", ["Turkey", "Spain", "Germany", "France"], "Turkey"],
-   [7, "In which season did Galatasaray last qualify for the UEFA Champions League knockout stages?", ["2014-15", "2017-18", "2019-20", "2020-21"], "2014-15"],
-   [8, "Which club did Galatasaray famously defeat in the 2013-14 UEFA Champions League round of 16?", ["Real Madrid", "Chelsea", "Juventus", "Schalke"], "Schalke"],
-   [9, "Which former Galatasaray player went on to play for Chelsea in the Premier League?", ["Garry Rodrigues", "Didier Drogba", "Emmanuel Eboué", "Arda Turan"], "Didier Drogba"],
-   [10, "Which year did Galatasaray win their first Turkish Süper Lig title?", ["1950", "1961", "1984", "1987"], "1961"]
-],
-"Porto": [
-   [1, "In which year did Porto win their first UEFA Champions League title?", ["1987", "2000", "2004", "2006"], "1987"],
-   [2, "Which manager led Porto to their 2004 UEFA Champions League victory?", ["Jorge Jesus", "André Villas-Boas", "José Mourinho", "Luiz Felipe Scolari"], "José Mourinho"],
-   [3, "Which stadium is the home of Porto?", ["Estádio da Luz", "Estádio do Dragão", "Alvalade", "Estádio José Alvalade"], "Estádio do Dragão"],
-   [4, "Who scored Porto's winning goal in the 2004 UEFA Champions League final against AS Monaco?", ["Ricardo Quaresma", "Deco", "Hélder Postiga", "Carlos Alberto"], "Carlos Alberto"],
-   [5, "Which Portuguese club is Porto's biggest domestic rival?", ["Benfica", "Sporting CP", "Boavista", "Braga"], "Benfica"],
-   [6, "Which Porto player won the UEFA Champions League Golden Boot in 2004?", ["Fernando Gomes", "Lisandro López", "Jorge Costa", "Ricardo Quaresma"], "Lisandro López"],
-   [7, "Which club did Porto famously defeat 6-1 in the 2015-16 UEFA Champions League round of 16?", ["Paris Saint-Germain", "Bayern Munich", "Chelsea", "Bayer Leverkusen"], "Bayer Leverkusen"],
-   [8, "Which Porto player went on to play for Chelsea in 2017?", ["Ricardo Pereira", "Alex Telles", "Ruben Neves", "André André"], "Alex Telles"],
-   [9, "Which year did Porto win their last Portuguese Liga title (as of 2023)?", ["2019", "2021", "2022", "2023"], "2020"],
-   [10, "In which season did Porto reach the UEFA Champions League quarter-finals for the first time?", ["1984-85", "1997-98", "2003-04", "2010-11"], "1984-85"]
-],
-"Crvena zvezda": [
-    [1, "In what year did Crvena zvezda win its only European Cup?", ["1989", "1991", "1993", "1995"], "1991"],
-    [2, "Which team did Crvena zvezda defeat in the 1990-91 European Cup final?", ["Barcelona", "AC Milan", "Marseille", "Real Madrid"], "Marseille"],
-    [3, "In which country does Crvena zvezda play?", ["Croatia", "Slovenia", "Serbia", "Bosnia and Herzegovina"], "Serbia"],
-    [4, "What is Crvena zvezda's stadium?", ["Partizan Stadium", "Rajko Mitić Stadium", "Maksimir Stadium", "Marakana"], "Rajko Mitić Stadium"],
-    [5, "Who is Crvena zvezda's biggest rival in Serbian football?", ["Vojvodina", "Radnički Niš", "Partizan", "Napredak"], "Partizan"],
-    [6, "Which of these players played for Crvena zvezda before becoming famous?", ["Luka Modrić", "Dejan Stanković", "Branislav Ivanović", "Nemanja Vidić"], "Dejan Stanković"],
-    [7, "How many times has Crvena zvezda won the Serbian league (until 2023)?", ["20", "25", "30", "35"], "30"],
-    [8, "In which UEFA Champions League season did Crvena zvezda first play in the group stage in the modern era?", ["2000-01", "2005-06", "2018-19", "2020-21"], "2018-19"],
-    [9, "Which of these teams was not in Crvena zvezda's group in the 2018-19 UEFA Champions League?", ["Liverpool", "Napoli", "PSG", "Juventus"], "Juventus"],
-    [10, "Which of these trophies has Crvena zvezda won?", ["Europa League", "UEFA Super Cup", "Intercontinental Cup", "Cup Winners' Cup"], "Intercontinental Cup"]
-],
-"Lens": [
-    [1, "In what year did Lens win its only Ligue 1 title?", ["1994", "1996", "1998", "2000"], "1998"],
-    [2, "What is the stadium where Lens plays its home matches?", ["Parc des Princes", "Stade Vélodrome", "Stade Félix-Bollaert", "Stade Pierre-Mauroy"], "Stade Félix-Bollaert"],
-    [3, "What is the most well-known nickname of RC Lens?", ["Les Sang et Or", "Les Dogues", "Les Canaris", "Les Verts"], "Les Sang et Or"],
-    [4, "Who is Lens' main rival in French football?", ["Lille", "PSG", "Marseille", "Lyon"], "Lille"],
-    [5, "In which season did Lens first play in the UEFA Champions League group stage?", ["1995-96", "1998-99", "2000-01", "2002-03"], "1998-99"],
-    [6, "Which team did Lens famously defeat at Old Trafford in the 1998-99 Champions League qualifying round?", ["Arsenal", "Manchester United", "Liverpool", "Chelsea"], "Arsenal"],
-    [7, "Which team eliminated Lens in its last UEFA Champions League group stage appearance before the 2023-24 season?", ["Bayern Munich", "PSG", "AC Milan", "Deportivo La Coruña"], "Deportivo La Coruña"],
-    [8, "Which of these players is a Lens legend?", ["Didier Drogba", "Raphaël Varane", "Claude Makélélé", "Patrick Vieira"], "Raphaël Varane"],
-    [9, "In which region of France is RC Lens located?", ["Normandy", "Hauts-de-France", "Alsace", "Occitania"], "Hauts-de-France"],
-    [10, "Which color dominates Lens' kit besides red?", ["Blue", "Green", "Gold", "Black"], "Gold"]
-]
-}
-
-groups_stage = True
-player_team_points = 0
-match_counter = 1  # Counter for matches
-opponent_results = []  # List to store match results of opponents
-
-print("-" * 60)
-
-while groups_stage:
-    for opponent in opponent_list:
-        print(f"\nMatch against: {opponent}\n")
-        print(questions[opponent][question_number - 1][1])
-        print("\n")
-        for option in questions[opponent][question_number - 1][2]:
-            print(option)
-        print("\n")
-
-        print(f"Answer = {questions[opponent][question_number - 1][3]}")
-        answer = input("Type your answer: ")
+            if answer == questions[opponent][question_number - 1][3]:
+                print("\nWin")
+                player_team_points += 3  # Win gives 3 points
+                opponent_points = 0  # Losing team gets 0 points
+                print(f"\nPoints after this match: {player_team_points}")
+            else:
+                print("\nLoss")
+                print(f"\nPoints after this match: {player_team_points}")
+                opponent_points = 3  # Loss means opponent gets 3 points
+            
+            print("-" * 60)
+            opponent_results.append([opponent, opponent_points])  # Storing result
         
+        groups_stage = False
 
-        if answer == questions[opponent][question_number - 1][3]:
-            print("\nWin")
-            player_team_points += 3  # Win gives 3 points
-            opponent_points = 0  # Losing team gets 0 points
-            print(f"\nPoints after this match: {player_team_points}")
+    print(f"You get {player_team_points} points for the groups stage games.")
+    input("Press Enter to reveal the opponent's match results!")
+
+    # Generating match results between opponents
+    print("-" * 60)
+
+    # Simulating opponent matches using random choice
+    result = random.choice([0, 1])
+    if result == 0:
+        winner = opponent_results[0][0]
+        opponent_results[0][1] += 3
+    else:
+        winner = opponent_results[1][0]
+        opponent_results[1][1] += 3
+    print(f"{opponent_results[0][0]} vs {opponent_results[1][0]}")
+    print(f"Winner: {winner}\n")
+
+    result = random.choice([0, 2])
+    if result == 0:
+        winner = opponent_results[0][0]
+        opponent_results[0][1] += 3
+    else:
+        winner = opponent_results[2][0]
+        opponent_results[2][1] += 3
+    print(f"{opponent_results[0][0]} vs {opponent_results[2][0]}")
+    print(f"Winner: {winner}\n")
+
+    result = random.choice([1, 2])
+    if result == 1:
+        winner = opponent_results[1][0]
+        opponent_results[1][1] += 3
+    else:
+        winner = opponent_results[2][0]
+        opponent_results[2][1] += 3
+    print(f"{opponent_results[1][0]} vs {opponent_results[2][0]}")
+    print(f"Winner: {winner}\n")
+
+    # Generating and sorting the standings table
+    standings = [[player_team, player_team_points], 
+                [opponent_results[0][0], opponent_results[0][1]], 
+                [opponent_results[1][0], opponent_results[1][1]], 
+                [opponent_results[2][0], opponent_results[2][1]]]
+
+    def get_key(team):
+        return team[1]  # Sorting based on points
+
+    sorted_stan = sorted(standings, key=get_key, reverse=True)  # Sorting standings in descending order
+
+    input("Press Enter to display the final group standings...")
+    # Displaying final group standings
+    print("-"*10 + player_team_group_name + " " + "Standings" + " " + "-"*10)
+    for team_data in sorted_stan:
+        print(f"{team_data[0]}: {team_data[1]}")
+    print("-"*38)
+
+    # Logic for determining teams advancing to the Round of 16
+    # The top two teams from each group qualify
+
+    groups = [group_A, group_B, group_C, group_D, group_E, group_F, group_G, group_H]
+
+    R16 = []  # List to store Round of 16 qualified teams
+
+    for group in groups:
+        qualified_1 = random.randint(1, 2)
+        qualified_2 = random.randint(3, 4)    
+        if group[0] == player_team_group_name:
+            R16.append(sorted_stan[0][0])
+            R16.append(sorted_stan[1][0])
         else:
-            print("\nLoss")
-            print(f"\nPoints after this match: {player_team_points}")
-            opponent_points = 3  # Loss means opponent gets 3 points
+            R16.append(group[qualified_1])     
+            R16.append(group[qualified_2])           
+
+    # Printing Round of 16 qualified teams
+    input("Press Enter to display the qualified teams for the Round of 16! ")
+    R16_index = 1
+    print("\nRound of 16 Qualified Teams: \n")
+    for team in R16:
+        print(f"{R16_index} - {team}")
+        R16_index += 1
+    print()
+
+    # Generating Round of 16 matchups
+    R16_matches = []
+    input("Press Enter to display the matchups for the Round of 16! ")
+    print("Round of 16 Matchups:\n")
+    for index in range(int(len(R16)/2)):
+        print(f"{index + 1 } - {R16[index]} vs {R16[len(R16) - index - 1]}")
+        R16_matches.append([R16[index], R16[len(R16) - index - 1]])
+
+    print()
+
+    R16_opponent_list = []
+
+    # Checking if the player's team is in any of the Round of 16 matchups
+    for match in R16_matches:
+        if match[0] == player_team or match[1] == player_team:
+            if match[0] == player_team:
+                R16_opponent_list.append(match[1])
+            else:
+                R16_opponent_list.append(match[0])
+        else:
+            continue
+
+    R16_question_number = random.randint(1,10)
+
+    R16_stage = True
+    while R16_stage:
+        for opponent in R16_opponent_list:
+            print(f"\nMatch against: {opponent}\n")
+            print(questions[opponent][R16_question_number - 1][1])
+            print("\n")
+            for option in questions[opponent][R16_question_number - 1][2]:
+                print(option)
+            print("\n")
+            answer = input("Type your answer: ")
+
+            if answer == questions[opponent][R16_question_number - 1][3]:
+                R16_player_result = True
+                print("\nWin")
+                print(f"\nYou advance to the next round.")
+            else:
+                R16_player_result = False
+                print("\nLoss")
+                print(f"\nYou've been disqualified")
+                player_team_status = False
+            
+            print("-" * 60)
         
-        print("-" * 60)
-        opponent_results.append([opponent, opponent_points])  # Storing result
-    
-    groups_stage = False
+        R16_stage = False
 
-print(f"You get {player_team_points} points for the groups stage games.")
-#print(opponent_results)
-input("Press Enter to reveal the opponent's match results!")
 
-# Generating match results between opponents
-print("-" * 60)
+    # Initialize an empty list to store teams advancing to Round of 8 (R8)
+    R8 = []
 
-# Simulating opponent matches using random choice
-result = random.choice([0, 1])
-if result == 0:
-    winner = opponent_results[0][0]
-    opponent_results[0][1] += 3
-else:
-    winner = opponent_results[1][0]
-    opponent_results[1][1] += 3
-print(f"{opponent_results[0][0]} vs {opponent_results[1][0]}")
-print(f"Winner: {winner}\n")
-
-result = random.choice([0, 2])
-if result == 0:
-    winner = opponent_results[0][0]
-    opponent_results[0][1] += 3
-else:
-    winner = opponent_results[2][0]
-    opponent_results[2][1] += 3
-print(f"{opponent_results[0][0]} vs {opponent_results[2][0]}")
-print(f"Winner: {winner}\n")
-
-result = random.choice([1, 2])
-if result == 1:
-    winner = opponent_results[1][0]
-    opponent_results[1][1] += 3
-else:
-    winner = opponent_results[2][0]
-    opponent_results[2][1] += 3
-print(f"{opponent_results[1][0]} vs {opponent_results[2][0]}")
-print(f"Winner: {winner}\n")
-
-# Generating and sorting the standings table
-standings = [[player_team, player_team_points], 
-            [opponent_results[0][0], opponent_results[0][1]], 
-            [opponent_results[1][0], opponent_results[1][1]], 
-            [opponent_results[2][0], opponent_results[2][1]]]
-
-def get_key(team):
-    return team[1]  # Sorting based on points
-
-sorted_stan = sorted(standings, key=get_key, reverse=True)  # Sorting standings in descending order
-
-input("Press Enter to display the final group standings...")
-# Displaying final group standings
-print("-"*10 + player_team_group_name + " " + "Standings" + " " + "-"*10)
-for team_data in sorted_stan:
-    print(f"{team_data[0]}: {team_data[1]}")
-print("-"*38)
-
-# Logic for determining teams advancing to the Round of 16
-# The top two teams from each group qualify
-
-groups = [group_A, group_B, group_C, group_D, group_E, group_F, group_G, group_H]
-
-R16 = []  # List to store Round of 16 qualified teams
-
-for group in groups:
-    qualified_1 = random.randint(1, 2)
-    qualified_2 = random.randint(3, 4)    
-    if group[0] == player_team_group_name:
-        R16.append(sorted_stan[0][0])
-        R16.append(sorted_stan[1][0])
-    else:
-        R16.append(group[qualified_1])     
-        R16.append(group[qualified_2])           
-
-# Printing Round of 16 qualified teams
-input("Press Enter to display the qualified teams for the Round of 16! ")
-R16_index = 1
-print("\nRound of 16 Qualified Teams: \n")
-for team in R16:
-    print(f"{R16_index} - {team}")
-    R16_index += 1
-print()
-
-# Generating Round of 16 matchups
-R16_matches = []
-input("Press Enter to display the matches for the Round of 16! ")
-print("Round of 16 Matches:\n")
-for index in range(int(len(R16)/2)):
-    print(f"{index + 1 } - {R16[index]} vs {R16[len(R16) - index - 1]}")
-    R16_matches.append([R16[index], R16[len(R16) - index - 1]])
-
-print()
-
-R16_opponent_list = []
-
-# Checking if the player's team is in any of the Round of 16 matchups
-for match in R16_matches:
-    if match[0] == player_team or match[1] == player_team:
-        if match[0] == player_team:
-            R16_opponent_list.append(match[1])
+    # Loop through all Round of 16 (R16) matches
+    for match in R16_matches:
+        # Check if the player_team is in the current match
+        if match[0] == player_team or match[1] == player_team:
+            # If player_team is the first team, add the opponent to the opponent list
+            if match[0] == player_team:
+                R16_opponent_list.append(match[1])
+            else:
+                # If player_team is the second team, add the opponent to the opponent list
+                R16_opponent_list.append(match[0])
         else:
-            R16_opponent_list.append(match[0])
-    else:
-        continue
+            # If neither team is player_team, continue to the next match
+            continue
 
-R16_question_number = random.randint(1,10)
-"""print(f"R16 # question: {R16_question_number}")
-print(f"Opponent: {R16_opponent_list[0]}")"""
+    # Print an empty line for clarity
+    print()
 
-R16_stage = True
-while R16_stage:
-    for opponent in R16_opponent_list:
-        print(f"\nMatch against: {opponent}\n")
-        print(questions[opponent][R16_question_number - 1][1])
-        print("\n")
-        for option in questions[opponent][R16_question_number - 1][2]:
-            print(option)
-        print("\n")
-        print(f"Answer = {questions[opponent][R16_question_number - 1][3]}")
-        answer = input("Type your answer: ")
-
-        if answer == questions[opponent][R16_question_number - 1][3]:
-            R16_player_result = True
-            print("\nWin")
-            print(f"\nYou advance to the next round.")
+    # Loop through all Round of 16 (R16) matches again to determine who advances to Round 8 (R8)
+    for match in R16_matches:
+        # Check if player_team is in the current match
+        if match[0] == player_team or match[1] == player_team:
+            # If player_team won, add it to the R8 list
+            if R16_player_result == True:
+                R8.append(player_team)
+            else:
+                # If player_team lost, add the opponent from the opponent list
+                R8.append(R16_opponent_list[0])
         else:
-            R16_player_result = False
-            print("\nLoss")
-            print(f"\nYou've been disqualified")
+            # For other matches, randomly determine the winner between the two teams
+            R16_match_winner = random.randint(0, 1)
+            # Add the winner to the R8 list
+            R8.append(match[R16_match_winner])
+
+
+    # Printing Round of 8 qualified teams
+    input("Press Enter to display the qualified teams for the Quarter-Finals! ")
+    R8_index = 1
+    print("\nQuarter-Finals qualified Teams: \n")
+    for team in R8:
+        print(f"{R8_index} - {team}")
+        R8_index += 1
+    print()
+
+    # Generating Round of 8 matchups
+    input("Press Enter to display the matchups for the Quarter-Finals! ")
+    R8_matches = []
+    print("Quarter-Finals Matchups:\n")
+    for index in range(int(len(R8)/2)):
+        print(f"{index + 1 } - {R8[index]} vs {R8[len(R8) - index - 1]}")
+        R8_matches.append([R8[index], R8[len(R8) - index - 1]])
+
+    print()
+
+    R8_opponent_list = []
+
+    # Checking if the player's team is in any of the Round of 8 matchups
+    for match in R8_matches:
+        if match[0] == player_team or match[1] == player_team:
+            if match[0] == player_team:
+                R8_opponent_list.append(match[1])
+            else:
+                R8_opponent_list.append(match[0])
+        else:
+            continue
+
+    R8_question_number = random.randint(1,10)
+
+    R8_stage = True
+    while R8_stage:
+        for opponent in R8_opponent_list:
+            print(f"\nMatch against: {opponent}\n")
+            print(questions[opponent][R8_question_number - 1][1])
+            print("\n")
+            for option in questions[opponent][R8_question_number - 1][2]:
+                print(option)
+            print("\n")
+            answer = input("Type your answer: ")
+
+            if answer == questions[opponent][R8_question_number - 1][3]:
+                R8_player_result = True
+                print("\nWin")
+                print(f"\nYou advance to the next round.")
+            else:
+                R8_player_result = False
+                print("\nLoss")
+                print(f"\nYou've been disqualified")
+                player_team_status = False
+
+            print("-" * 60)
         
-        print("-" * 60)
-    
-    R16_stage = False
+        R8_stage = False
 
 
-# Initialize an empty list to store teams advancing to Round of 8 (R8)
-R8 = []
+    # Initialize an empty list to store teams advancing to Round of 4 (R4)
+    R4 = []
 
-# Loop through all Round of 16 (R16) matches
-for match in R16_matches:
-    # Check if the player_team is in the current match
-    if match[0] == player_team or match[1] == player_team:
-        # If player_team is the first team, add the opponent to the opponent list
-        if match[0] == player_team:
-            R16_opponent_list.append(match[1])
+    # Loop through all Round of 4 (R4) matches
+    for match in R8_matches:
+        # Check if the player_team is in the current match
+        if match[0] == player_team or match[1] == player_team:
+            # If player_team is the first team, add the opponent to the opponent list
+            if match[0] == player_team:
+                R8_opponent_list.append(match[1])
+            else:
+                # If player_team is the second team, add the opponent to the opponent list
+                R8_opponent_list.append(match[0])
         else:
-            # If player_team is the second team, add the opponent to the opponent list
-            R16_opponent_list.append(match[0])
-    else:
-        # If neither team is player_team, continue to the next match
-        continue
+            # If neither team is player_team, continue to the next match
+            continue
 
-# Print an empty line for clarity
-print()
+    # Print an empty line for clarity
+    print()
 
-# Loop through all Round of 16 (R16) matches again to determine who advances to Round 8 (R8)
-for match in R16_matches:
-    # Check if player_team is in the current match
-    if match[0] == player_team or match[1] == player_team:
-        # If player_team won, add it to the R8 list
-        if R16_player_result == True:
-            R8.append(player_team)
+    # Loop through all Round of 16 (R16) matches again to determine who advances to Round 8 (R8)
+    for match in R8_matches:
+        # Check if player_team is in the current match
+        if match[0] == player_team or match[1] == player_team:
+            # If player_team won, add it to the R8 list
+            if R8_player_result == True:
+                R4.append(player_team)
+            else:
+                # If player_team lost, add the opponent from the opponent list
+                R4.append(R8_opponent_list[0])
         else:
-            # If player_team lost, add the opponent from the opponent list
-            R8.append(R16_opponent_list[0])
-    else:
-        # For other matches, randomly determine the winner between the two teams
-        R16_match_winner = random.randint(0, 1)
-        # Add the winner to the R8 list
-        R8.append(match[R16_match_winner])
+            # For other matches, randomly determine the winner between the two teams
+            R8_match_winner = random.randint(0, 1)
+            # Add the winner to the R8 list
+            R4.append(match[R8_match_winner])
 
-# Print the list of teams advancing to Round of 8 (R8)
-# print(R8)
+    # Printing Round of 4 qualified teams
+    input("Press Enter to display the qualified teams for the Semi-Finals! ")
+    R4_index = 1
+    print("\nSemi Finals Qualified Teams: \n")
+    for team in R4:
+        print(f"{R4_index} - {team}")
+        R4_index += 1
+    print()
 
-###################################################################################################################
-# Printing Round of 8 qualified teams
-input("Press Enter to display the qualified teams for the Quarter-Finals! ")
-R8_index = 1
-print("\nQuarter-Finals qualified Teams: \n")
-for team in R8:
-    print(f"{R8_index} - {team}")
-    R8_index += 1
-print()
+    # Generating Round of 4 matchups
+    input("Press Enter to display the Semi-Finals matchups! ")
+    R4_matches = []
+    print("Semi Final Matchups:\n")
+    for index in range(int(len(R4)/2)):
+        print(f"{index + 1 } - {R4[index]} vs {R4[len(R4) - index - 1]}")
+        R4_matches.append([R4[index], R4[len(R4) - index - 1]])
 
-# Generating Round of 8 matchups
-input("Press Enter to display the matches for the Quarter-Finals! ")
-R8_matches = []
-print("Quarter-Finals Matches:\n")
-for index in range(int(len(R8)/2)):
-    print(f"{index + 1 } - {R8[index]} vs {R8[len(R8) - index - 1]}")
-    R8_matches.append([R8[index], R8[len(R8) - index - 1]])
+    print()
 
-print()
+    R4_opponent_list = []
 
-R8_opponent_list = []
-
-#print(f"Opponent list {R8_opponent_list}")
-
-# Checking if the player's team is in any of the Round of 16 matchups
-for match in R8_matches:
-    if match[0] == player_team or match[1] == player_team:
-        if match[0] == player_team:
-            R8_opponent_list.append(match[1])
+    # Checking if the player's team is in any of the Round of 16 matchups
+    for match in R4_matches:
+        if match[0] == player_team or match[1] == player_team:
+            if match[0] == player_team:
+                R4_opponent_list.append(match[1])
+            else:
+                R4_opponent_list.append(match[0])
         else:
-            R8_opponent_list.append(match[0])
-    else:
-        continue
+            continue
 
-#print(f"Opponent list: {R8_opponent_list}")
+    R4_question_number = random.randint(1,10)
 
-R8_question_number = random.randint(1,10)
-"""print(f"R8 # question: {R8_question_number}")
-print(f"Opponent: {R8_opponent_list[0]}")"""
+    R4_stage = True
+    while R4_stage:
+        for opponent in R4_opponent_list:
+            print(f"\nMatch against: {opponent}\n")
+            print(questions[opponent][R4_question_number - 1][1])
+            print("\n")
+            for option in questions[opponent][R4_question_number - 1][2]:
+                print(option)
+            print("\n")
+            answer = input("Type your answer: ")
 
-R8_stage = True
-while R8_stage:
-    for opponent in R8_opponent_list:
-        print(f"\nMatch against: {opponent}\n")
-        print(questions[opponent][R8_question_number - 1][1])
-        print("\n")
-        for option in questions[opponent][R8_question_number - 1][2]:
-            print(option)
-        print("\n")
-        print(f"Answer = {questions[opponent][R8_question_number - 1][3]}")
-        answer = input("Type your answer: ")
+            if answer == questions[opponent][R4_question_number - 1][3]:
+                R4_player_result = True
+                print("\nWin")
+                print(f"\nYou advance to the next round.")
+            else:
+                R4_player_result = False
+                print("\nLoss")
+                print(f"\nYou've been disqualified")
+                player_team_status = False
 
-        if answer == questions[opponent][R8_question_number - 1][3]:
-            R8_player_result = True
-            print("\nWin")
-            print(f"\nYou advance to the next round.")
-        else:
-            R8_player_result = False
-            print("\nLoss")
-            print(f"\nYou've been disqualified")
+            print("-" * 60)
         
-        print("-" * 60)
-    
-    R8_stage = False
+        R4_stage = False
 
+    # Initialize an empty list to store teams advancing to Round of 2 (R2)
+    R2 = []
 
-# Initialize an empty list to store teams advancing to Round of 8 (R8)
-R4 = []
+    # Loop through all Round of 4 (R4) matches
 
-# Loop through all Round of 8 (R8) matches
-for match in R8_matches:
-    # Check if the player_team is in the current match
-    if match[0] == player_team or match[1] == player_team:
-        # If player_team is the first team, add the opponent to the opponent list
-        if match[0] == player_team:
-            R8_opponent_list.append(match[1])
+    for match in R4_matches:
+        # Check if the player_team is in the current match
+        if match[0] == player_team or match[1] == player_team:
+            # If player_team is the first team, add the opponent to the opponent list
+            if match[0] == player_team:
+                R4_opponent_list.append(match[1])
+            else:
+                # If player_team is the second team, add the opponent to the opponent list
+                R4_opponent_list.append(match[0])
         else:
-            # If player_team is the second team, add the opponent to the opponent list
-            R8_opponent_list.append(match[0])
-    else:
-        # If neither team is player_team, continue to the next match
-        continue
+            # If neither team is player_team, continue to the next match
+            continue
 
-# Print an empty line for clarity
-print()
+    # Print an empty line for clarity
+    print()
 
-# Loop through all Round of 16 (R16) matches again to determine who advances to Round 8 (R8)
-for match in R8_matches:
-    # Check if player_team is in the current match
-    if match[0] == player_team or match[1] == player_team:
-        # If player_team won, add it to the R8 list
-        if R8_player_result == True:
-            R4.append(player_team)
+    # Loop through all Round of 4 (R4) matches again to determine who advances to Round 2 (R2)
+    for match in R4_matches:
+        # Check if player_team is in the current match
+        if match[0] == player_team or match[1] == player_team:
+            # If player_team won, add it to the R8 list
+            if R4_player_result == True:
+                R2.append(player_team)
+            else:
+                # If player_team lost, add the opponent from the opponent list
+                R2.append(R4_opponent_list[0])
         else:
-            # If player_team lost, add the opponent from the opponent list
-            R4.append(R8_opponent_list[0])
-    else:
-        # For other matches, randomly determine the winner between the two teams
-        R8_match_winner = random.randint(0, 1)
-        # Add the winner to the R8 list
-        R4.append(match[R8_match_winner])
+            # For other matches, randomly determine the winner between the two teams
+            R4_match_winner = random.randint(0, 1)
+            # Add the winner to the R8 list
+            R2.append(match[R4_match_winner])
 
-# Print the list of teams advancing to Round of 4 (R4)
-#print(R4)
+    # Printing Round of 2 qualified teams
+    input("Press Enter to display the qualified teams for the Final! ")
+    R2_index = 1
+    print("\nFinal Qualified Teams: \n")
+    for team in R2:
+        print(f"{R2_index} - {team}")
+        R2_index += 1
+    print()
 
+    # Generating Round of 2 matchups
+    R2_matches = []
+    print("Final Match:\n")
+    for index in range(int(len(R2)/2)):
+        print(f"{index + 1 } - {R2[index]} vs {R2[len(R2) - index - 1]}")
+        R2_matches.append([R2[index], R2[len(R2) - index - 1]])
 
-###################################################################################################################
-# Printing Round of 4 qualified teams
-input("Press Enter to display the qualified teams for the Semi-Finals! ")
-R4_index = 1
-print("\nSemi Finals Qualified Teams: \n")
-for team in R4:
-    print(f"{R4_index} - {team}")
-    R4_index += 1
-print()
+    print()
 
-# Generating Round of 4 matchups
-input("Press Enter to display the Semi-Finals matchups! ")
-R4_matches = []
-print("Semi Final Matchups:\n")
-for index in range(int(len(R4)/2)):
-    print(f"{index + 1 } - {R4[index]} vs {R4[len(R4) - index - 1]}")
-    R4_matches.append([R4[index], R4[len(R4) - index - 1]])
+    R2_opponent_list = []
 
-print()
-
-R4_opponent_list = []
-
-#print(f"Opponent list {R4_opponent_list}")
-
-# Checking if the player's team is in any of the Round of 16 matchups
-for match in R4_matches:
-    if match[0] == player_team or match[1] == player_team:
-        if match[0] == player_team:
-            R4_opponent_list.append(match[1])
+    # Checking if the player's team is in any of the Round of 16 matchups
+    for match in R2_matches:
+        if match[0] == player_team or match[1] == player_team:
+            if match[0] == player_team:
+                R2_opponent_list.append(match[1])
+            else:
+                R2_opponent_list.append(match[0])
         else:
-            R4_opponent_list.append(match[0])
-    else:
-        continue
+            continue
 
-#print(f"Opponent list: {R4_opponent_list}")
+    R2_question_number = random.randint(1,10)
 
-R4_question_number = random.randint(1,10)
-"""print(f"R4 # question: {R4_question_number}")
-print(f"Opponent: {R4_opponent_list[0]}")"""
+    R2_stage = True
+    while R2_stage:
+        if len(R2_opponent_list) == 0:
+            champion_index = random.randint(0,1) 
+            print(f"The Champion is {R2[champion_index]}!!!!")
+        else:    
+            for opponent in R2_opponent_list:
+                print(f"\nMatch against: {opponent}\n")
+                print(questions[opponent][R2_question_number - 1][1])
+                print("\n")
+                for option in questions[opponent][R2_question_number - 1][2]:
+                    print(option)
+                print("\n")
+                answer = input("Type your answer: ")
 
-R4_stage = True
-while R4_stage:
-    for opponent in R4_opponent_list:
-        print(f"\nMatch against: {opponent}\n")
-        print(questions[opponent][R4_question_number - 1][1])
-        print("\n")
-        for option in questions[opponent][R4_question_number - 1][2]:
-            print(option)
-        print("\n")
-        print(f"Answer = {questions[opponent][R4_question_number - 1][3]}")
-        answer = input("Type your answer: ")
+                if answer == questions[opponent][R2_question_number - 1][3]:
+                    R2_player_result = True
+                    print("\nWin")
+                    print(f"\nYou are the Champion!!!!.")
+                else:
+                    R2_player_result = False
+                    print("\nLoss")
+                    print(f"\nYou've been disqualified")
+                    print(f"\nThe Champion is {R2_opponent_list[0]}")
+                player_team_status = False
 
-        if answer == questions[opponent][R4_question_number - 1][3]:
-            R4_player_result = True
-            print("\nWin")
-            print(f"\nYou advance to the next round.")
-        else:
-            R4_player_result = False
-            print("\nLoss")
-            print(f"\nYou've been disqualified")
+                print("-" * 60)
         
-        print("-" * 60)
-    
-    R4_stage = False
-
-
-# Initialize an empty list to store teams advancing to Round of 8 (R8)
-R2 = []
-
-# Loop through all Round of 4 (R4) matches
-
-for match in R4_matches:
-    # Check if the player_team is in the current match
-    if match[0] == player_team or match[1] == player_team:
-        # If player_team is the first team, add the opponent to the opponent list
-        if match[0] == player_team:
-            R4_opponent_list.append(match[1])
-        else:
-            # If player_team is the second team, add the opponent to the opponent list
-            R4_opponent_list.append(match[0])
-    else:
-        # If neither team is player_team, continue to the next match
-        continue
-
-# Print an empty line for clarity
-print()
-
-# Loop through all Round of 16 (R16) matches again to determine who advances to Round 8 (R8)
-for match in R4_matches:
-    # Check if player_team is in the current match
-    if match[0] == player_team or match[1] == player_team:
-        # If player_team won, add it to the R8 list
-        if R4_player_result == True:
-            R2.append(player_team)
-        else:
-            # If player_team lost, add the opponent from the opponent list
-            R2.append(R8_opponent_list[0])
-    else:
-        # For other matches, randomly determine the winner between the two teams
-        R4_match_winner = random.randint(0, 1)
-        # Add the winner to the R8 list
-        R2.append(match[R8_match_winner])
-
-# Print the list of teams advancing to Round of 4 (R4)
-#print(R2)
-
-###################################################################################################################
-# Printing Round of 2 qualified teams
-input("Press Enter to display the qualified teams for the Final! ")
-R2_index = 1
-print("\nFinal Qualified Teams: \n")
-for team in R2:
-    print(f"{R2_index} - {team}")
-    R2_index += 1
-print()
-
-# Generating Round of 2 matchups
-R2_matches = []
-print("Final Match:\n")
-for index in range(int(len(R2)/2)):
-    print(f"{index + 1 } - {R2[index]} vs {R2[len(R2) - index - 1]}")
-    R2_matches.append([R2[index], R2[len(R2) - index - 1]])
-
-print()
-
-R2_opponent_list = []
-
-#print(f"Opponent list {R2_opponent_list}")
-
-# Checking if the player's team is in any of the Round of 16 matchups
-for match in R2_matches:
-    if match[0] == player_team or match[1] == player_team:
-        if match[0] == player_team:
-            R2_opponent_list.append(match[1])
-        else:
-            R2_opponent_list.append(match[0])
-    else:
-        continue
-
-#print(f"Opponent list: {R2_opponent_list}")
-
-R2_question_number = random.randint(1,10)
-"""print(f"Final question: {R2_question_number}")
-print(f"Opponent: {R2_opponent_list[0]}")"""
-
-R2_stage = True
-while R2_stage:
-    for opponent in R2_opponent_list:
-        print(f"\nMatch against: {opponent}\n")
-        print(questions[opponent][R2_question_number - 1][1])
-        print("\n")
-        for option in questions[opponent][R2_question_number - 1][2]:
-            print(option)
-        print("\n")
-        print(f"Answer = {questions[opponent][R2_question_number - 1][3]}")
-        answer = input("Type your answer: ")
-
-        if answer == questions[opponent][R2_question_number - 1][3]:
-            R2_player_result = True
-            print("\nWin")
-            print(f"\nYou are the Champion!.")
-        else:
-            R2_player_result = False
-            print("\nLoss")
-            print(f"\nYou've been disqualified")
-        
-        print("-" * 60)
-    
-    R2_stage = False
+        R2_stage = False
 
 
 
