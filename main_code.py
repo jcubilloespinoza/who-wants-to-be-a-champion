@@ -46,6 +46,7 @@ player_team = input("It's time to reveal your loyalty! Type the name of your fav
 print(f"\nA champion has spoken!, {player_name} stands with {player_team}!")
 print("It’s time for the big draw! Let’s determine the groups for the group stage!")
 
+input("\nHit Enter to continue! ")
 # Create a list of all 32 teams
 group_stage_teams = []
 
@@ -125,7 +126,7 @@ for group in groups:
         print(f"\n\nYour team: {player_team} has been assigned to {group[0]}!")
         player_group = group
 
-input("\n\nLet's generate the group stage matches. Hit Enter to continue. \n")
+input("\n\nLet's generate the group stage matches. Press Enter to continue. \n")
 
 opponent_counter = 1
 opponent_list = []
@@ -486,7 +487,7 @@ questions = {
    [7, "In which season did Galatasaray last qualify for the UEFA Champions League knockout stages?", ["2014-15", "2017-18", "2019-20", "2020-21"], "2014-15"],
    [8, "Which club did Galatasaray famously defeat in the 2013-14 UEFA Champions League round of 16?", ["Real Madrid", "Chelsea", "Juventus", "Schalke"], "Schalke"],
    [9, "Which former Galatasaray player went on to play for Chelsea in the Premier League?", ["Garry Rodrigues", "Didier Drogba", "Emmanuel Eboué", "Arda Turan"], "Didier Drogba"],
-   [10, "Which year did Galatasaray win their first Turkish Süper Lig title?", ["1950", "1960", "1984", "1987"], "1962"]
+   [10, "Which year did Galatasaray win their first Turkish Süper Lig title?", ["1950", "1961", "1984", "1987"], "1961"]
 ],
 "Porto": [
    [1, "In which year did Porto win their first UEFA Champions League title?", ["1987", "2000", "2004", "2006"], "1987"],
@@ -531,6 +532,8 @@ player_team_points = 0
 match_counter = 1  # Counter for matches
 opponent_results = []  # List to store match results of opponents
 
+print("-" * 60)
+
 while groups_stage:
     for opponent in opponent_list:
         print(f"\nMatch against: {opponent}\n")
@@ -540,7 +543,9 @@ while groups_stage:
             print(option)
         print("\n")
 
+        print(f"Answer = {questions[opponent][question_number - 1][3]}")
         answer = input("Type your answer: ")
+        
 
         if answer == questions[opponent][question_number - 1][3]:
             print("\nWin")
@@ -557,12 +562,12 @@ while groups_stage:
     
     groups_stage = False
 
-print(f"\nYou get {player_team_points} points for the groups stage games.")
+print(f"You get {player_team_points} points for the groups stage games.")
 #print(opponent_results)
-
+input("Press Enter to reveal the opponent's match results!")
 
 # Generating match results between opponents
-print("\nOpponent matches:\n")
+print("-" * 60)
 
 # Simulating opponent matches using random choice
 result = random.choice([0, 1])
@@ -595,20 +600,18 @@ else:
 print(f"{opponent_results[1][0]} vs {opponent_results[2][0]}")
 print(f"Winner: {winner}\n")
 
-
-
 # Generating and sorting the standings table
 standings = [[player_team, player_team_points], 
             [opponent_results[0][0], opponent_results[0][1]], 
             [opponent_results[1][0], opponent_results[1][1]], 
             [opponent_results[2][0], opponent_results[2][1]]]
 
-print()
 def get_key(team):
     return team[1]  # Sorting based on points
 
 sorted_stan = sorted(standings, key=get_key, reverse=True)  # Sorting standings in descending order
 
+input("Press Enter to display the final group standings...")
 # Displaying final group standings
 print("-"*10 + player_team_group_name + " " + "Standings" + " " + "-"*10)
 for team_data in sorted_stan:
@@ -633,6 +636,7 @@ for group in groups:
         R16.append(group[qualified_2])           
 
 # Printing Round of 16 qualified teams
+input("Press Enter to display the qualified teams for the Round of 16! ")
 R16_index = 1
 print("\nRound of 16 Qualified Teams: \n")
 for team in R16:
@@ -642,6 +646,7 @@ print()
 
 # Generating Round of 16 matchups
 R16_matches = []
+input("Press Enter to display the matches for the Round of 16! ")
 print("Round of 16 Matches:\n")
 for index in range(int(len(R16)/2)):
     print(f"{index + 1 } - {R16[index]} vs {R16[len(R16) - index - 1]}")
@@ -661,10 +666,9 @@ for match in R16_matches:
     else:
         continue
 
-
 R16_question_number = random.randint(1,10)
-print(f"R16 # question: {R16_question_number}")
-print(f"Opponent: {R16_opponent_list[0]}")
+"""print(f"R16 # question: {R16_question_number}")
+print(f"Opponent: {R16_opponent_list[0]}")"""
 
 R16_stage = True
 while R16_stage:
@@ -675,7 +679,7 @@ while R16_stage:
         for option in questions[opponent][R16_question_number - 1][2]:
             print(option)
         print("\n")
-
+        print(f"Answer = {questions[opponent][R16_question_number - 1][3]}")
         answer = input("Type your answer: ")
 
         if answer == questions[opponent][R16_question_number - 1][3]:
@@ -729,4 +733,283 @@ for match in R16_matches:
         R8.append(match[R16_match_winner])
 
 # Print the list of teams advancing to Round of 8 (R8)
-print(R8)
+# print(R8)
+
+###################################################################################################################
+# Printing Round of 8 qualified teams
+input("Press Enter to display the qualified teams for the Quarter-Finals! ")
+R8_index = 1
+print("\nQuarter-Finals qualified Teams: \n")
+for team in R8:
+    print(f"{R8_index} - {team}")
+    R8_index += 1
+print()
+
+# Generating Round of 8 matchups
+input("Press Enter to display the matches for the Quarter-Finals! ")
+R8_matches = []
+print("Quarter-Finals Matches:\n")
+for index in range(int(len(R8)/2)):
+    print(f"{index + 1 } - {R8[index]} vs {R8[len(R8) - index - 1]}")
+    R8_matches.append([R8[index], R8[len(R8) - index - 1]])
+
+print()
+
+R8_opponent_list = []
+
+#print(f"Opponent list {R8_opponent_list}")
+
+# Checking if the player's team is in any of the Round of 16 matchups
+for match in R8_matches:
+    if match[0] == player_team or match[1] == player_team:
+        if match[0] == player_team:
+            R8_opponent_list.append(match[1])
+        else:
+            R8_opponent_list.append(match[0])
+    else:
+        continue
+
+#print(f"Opponent list: {R8_opponent_list}")
+
+R8_question_number = random.randint(1,10)
+"""print(f"R8 # question: {R8_question_number}")
+print(f"Opponent: {R8_opponent_list[0]}")"""
+
+R8_stage = True
+while R8_stage:
+    for opponent in R8_opponent_list:
+        print(f"\nMatch against: {opponent}\n")
+        print(questions[opponent][R8_question_number - 1][1])
+        print("\n")
+        for option in questions[opponent][R8_question_number - 1][2]:
+            print(option)
+        print("\n")
+        print(f"Answer = {questions[opponent][R8_question_number - 1][3]}")
+        answer = input("Type your answer: ")
+
+        if answer == questions[opponent][R8_question_number - 1][3]:
+            R8_player_result = True
+            print("\nWin")
+            print(f"\nYou advance to the next round.")
+        else:
+            R8_player_result = False
+            print("\nLoss")
+            print(f"\nYou've been disqualified")
+        
+        print("-" * 60)
+    
+    R8_stage = False
+
+
+# Initialize an empty list to store teams advancing to Round of 8 (R8)
+R4 = []
+
+# Loop through all Round of 8 (R8) matches
+for match in R8_matches:
+    # Check if the player_team is in the current match
+    if match[0] == player_team or match[1] == player_team:
+        # If player_team is the first team, add the opponent to the opponent list
+        if match[0] == player_team:
+            R8_opponent_list.append(match[1])
+        else:
+            # If player_team is the second team, add the opponent to the opponent list
+            R8_opponent_list.append(match[0])
+    else:
+        # If neither team is player_team, continue to the next match
+        continue
+
+# Print an empty line for clarity
+print()
+
+# Loop through all Round of 16 (R16) matches again to determine who advances to Round 8 (R8)
+for match in R8_matches:
+    # Check if player_team is in the current match
+    if match[0] == player_team or match[1] == player_team:
+        # If player_team won, add it to the R8 list
+        if R8_player_result == True:
+            R4.append(player_team)
+        else:
+            # If player_team lost, add the opponent from the opponent list
+            R4.append(R8_opponent_list[0])
+    else:
+        # For other matches, randomly determine the winner between the two teams
+        R8_match_winner = random.randint(0, 1)
+        # Add the winner to the R8 list
+        R4.append(match[R8_match_winner])
+
+# Print the list of teams advancing to Round of 4 (R4)
+#print(R4)
+
+
+###################################################################################################################
+# Printing Round of 4 qualified teams
+input("Press Enter to display the qualified teams for the Semi-Finals! ")
+R4_index = 1
+print("\nSemi Finals Qualified Teams: \n")
+for team in R4:
+    print(f"{R4_index} - {team}")
+    R4_index += 1
+print()
+
+# Generating Round of 4 matchups
+input("Press Enter to display the Semi-Finals matchups! ")
+R4_matches = []
+print("Semi Final Matchups:\n")
+for index in range(int(len(R4)/2)):
+    print(f"{index + 1 } - {R4[index]} vs {R4[len(R4) - index - 1]}")
+    R4_matches.append([R4[index], R4[len(R4) - index - 1]])
+
+print()
+
+R4_opponent_list = []
+
+#print(f"Opponent list {R4_opponent_list}")
+
+# Checking if the player's team is in any of the Round of 16 matchups
+for match in R4_matches:
+    if match[0] == player_team or match[1] == player_team:
+        if match[0] == player_team:
+            R4_opponent_list.append(match[1])
+        else:
+            R4_opponent_list.append(match[0])
+    else:
+        continue
+
+#print(f"Opponent list: {R4_opponent_list}")
+
+R4_question_number = random.randint(1,10)
+"""print(f"R4 # question: {R4_question_number}")
+print(f"Opponent: {R4_opponent_list[0]}")"""
+
+R4_stage = True
+while R4_stage:
+    for opponent in R4_opponent_list:
+        print(f"\nMatch against: {opponent}\n")
+        print(questions[opponent][R4_question_number - 1][1])
+        print("\n")
+        for option in questions[opponent][R4_question_number - 1][2]:
+            print(option)
+        print("\n")
+        print(f"Answer = {questions[opponent][R4_question_number - 1][3]}")
+        answer = input("Type your answer: ")
+
+        if answer == questions[opponent][R4_question_number - 1][3]:
+            R4_player_result = True
+            print("\nWin")
+            print(f"\nYou advance to the next round.")
+        else:
+            R4_player_result = False
+            print("\nLoss")
+            print(f"\nYou've been disqualified")
+        
+        print("-" * 60)
+    
+    R4_stage = False
+
+
+# Initialize an empty list to store teams advancing to Round of 8 (R8)
+R2 = []
+
+# Loop through all Round of 4 (R4) matches
+
+for match in R4_matches:
+    # Check if the player_team is in the current match
+    if match[0] == player_team or match[1] == player_team:
+        # If player_team is the first team, add the opponent to the opponent list
+        if match[0] == player_team:
+            R4_opponent_list.append(match[1])
+        else:
+            # If player_team is the second team, add the opponent to the opponent list
+            R4_opponent_list.append(match[0])
+    else:
+        # If neither team is player_team, continue to the next match
+        continue
+
+# Print an empty line for clarity
+print()
+
+# Loop through all Round of 16 (R16) matches again to determine who advances to Round 8 (R8)
+for match in R4_matches:
+    # Check if player_team is in the current match
+    if match[0] == player_team or match[1] == player_team:
+        # If player_team won, add it to the R8 list
+        if R4_player_result == True:
+            R2.append(player_team)
+        else:
+            # If player_team lost, add the opponent from the opponent list
+            R2.append(R8_opponent_list[0])
+    else:
+        # For other matches, randomly determine the winner between the two teams
+        R4_match_winner = random.randint(0, 1)
+        # Add the winner to the R8 list
+        R2.append(match[R8_match_winner])
+
+# Print the list of teams advancing to Round of 4 (R4)
+#print(R2)
+
+###################################################################################################################
+# Printing Round of 2 qualified teams
+input("Press Enter to display the qualified teams for the Final! ")
+R2_index = 1
+print("\nFinal Qualified Teams: \n")
+for team in R2:
+    print(f"{R2_index} - {team}")
+    R2_index += 1
+print()
+
+# Generating Round of 2 matchups
+R2_matches = []
+print("Final Match:\n")
+for index in range(int(len(R2)/2)):
+    print(f"{index + 1 } - {R2[index]} vs {R2[len(R2) - index - 1]}")
+    R2_matches.append([R2[index], R2[len(R2) - index - 1]])
+
+print()
+
+R2_opponent_list = []
+
+#print(f"Opponent list {R2_opponent_list}")
+
+# Checking if the player's team is in any of the Round of 16 matchups
+for match in R2_matches:
+    if match[0] == player_team or match[1] == player_team:
+        if match[0] == player_team:
+            R2_opponent_list.append(match[1])
+        else:
+            R2_opponent_list.append(match[0])
+    else:
+        continue
+
+#print(f"Opponent list: {R2_opponent_list}")
+
+R2_question_number = random.randint(1,10)
+"""print(f"Final question: {R2_question_number}")
+print(f"Opponent: {R2_opponent_list[0]}")"""
+
+R2_stage = True
+while R2_stage:
+    for opponent in R2_opponent_list:
+        print(f"\nMatch against: {opponent}\n")
+        print(questions[opponent][R2_question_number - 1][1])
+        print("\n")
+        for option in questions[opponent][R2_question_number - 1][2]:
+            print(option)
+        print("\n")
+        print(f"Answer = {questions[opponent][R2_question_number - 1][3]}")
+        answer = input("Type your answer: ")
+
+        if answer == questions[opponent][R2_question_number - 1][3]:
+            R2_player_result = True
+            print("\nWin")
+            print(f"\nYou are the Champion!.")
+        else:
+            R2_player_result = False
+            print("\nLoss")
+            print(f"\nYou've been disqualified")
+        
+        print("-" * 60)
+    
+    R2_stage = False
+
+
+
